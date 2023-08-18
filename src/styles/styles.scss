@@ -1,0 +1,11 @@
+// Write your overrides
+
+// Site Background Lines
+.v-application__wrap {
+	/* stylelint-disable-next-line liberty/use-logical-spec */
+	min-height: calc(var(--vh, 1vh) * 100);
+	background-image: url('/src/assets/images/pages/bg.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
