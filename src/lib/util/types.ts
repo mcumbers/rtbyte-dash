@@ -27,5 +27,7 @@ export interface GuildData {
 	icon: string,
 	owner: boolean,
 	permissions: string,
-	features: string[]
+	features: string[],
+	botInGuild: boolean,
+	canManageServer: boolean
 }

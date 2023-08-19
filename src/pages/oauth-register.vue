@@ -21,13 +21,13 @@ async function exchangeCodeForAccessToken() {
 			code: codeSearchParam
 		});
 
-	console.log(response);
+		console.log(response);
 
-	// Now store data somewhere so you can access it later.
-	localStorage.setItem('discord-data', JSON.stringify(response.data));
+		// Now store data somewhere so you can access it later.
+		localStorage.setItem('discord-data', JSON.stringify(response.data));
 
-	// Lastly, send the user back to the home page or similar:
-	//window.location.replace('/');
+		// Lastly, send the user back to the home page or similar:
+		window.location.replace('/');
 
 	} catch (error) {
 		console.log(error);
