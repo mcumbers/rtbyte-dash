@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify'
-import axios, { Axios, AxiosError } from 'axios';
 
 import darkThemeLogo from '@images/wordmark-dark.svg?raw'
 import lightThemeLogo from '@images/wordmark-light.svg?raw'
@@ -11,31 +10,10 @@ const logo = computed(() => {
 		: darkThemeLogo
 })
 
-import type { LoginData } from '@sapphire/plugin-api';
-
-async function exchangeCodeForAccessToken() {
-	const codeSearchParam = new URL(window.location.href).searchParams.get('code');
-
-	try {
-		const response = await axios.post('http://localhost:4000/oauth/callback', {
-			code: codeSearchParam
-		});
-
-		console.log(response);
-
-		// Now store data somewhere so you can access it later.
-		localStorage.setItem('discord-data', JSON.stringify(response.data));
-
-		// Lastly, send the user back to the home page or similar:
-		window.location.replace('/');
-
-	} catch (error) {
-		console.log(error);
-	}
-}
-
 onMounted(async () => {
-	await exchangeCodeForAccessToken();
+	localStorage.clear();
+	document.cookie = 'RTBYTE_AUTH' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	window.location.replace('/login');
 })
 </script>
 
@@ -54,7 +32,7 @@ onMounted(async () => {
 
 			<VCardText class="pt-2">
 				<h5 class="text-h5 font-weight-semibold mb-1">
-					Logging into the RTByte Dashboard...
+					Logging you out...
 				</h5>
 			</VCardText>
 		</VCard>

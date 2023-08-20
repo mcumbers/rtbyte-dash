@@ -3,18 +3,20 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
-		{ path: '/', redirect: '/dashboard' },
+		{ path: '/', redirect: '/guilds' },
 		{
 			path: '/',
 			component: () => import('../layouts/default.vue'),
 			children: [
 				{
-					path: 'dashboard',
-					component: () => import('../pages/dashboard.vue'),
+					path: 'guilds',
+					name: 'guilds',
+					component: () => import('../pages/guilds.vue'),
 				},
 				{
-					path: 'account-settings',
-					component: () => import('../pages/account-settings.vue'),
+					path: 'account',
+					name: 'account',
+					component: () => import('../pages/account.vue'),
 				},
 				{
 					path: 'typography',
@@ -44,11 +46,18 @@ const router = createRouter({
 			children: [
 				{
 					path: 'login',
+					name: 'login',
 					component: () => import('../pages/login.vue'),
 				},
 				{
-					path: 'oauth-register',
-					component: () => import('../pages/oauth-register.vue'),
+					path: 'logout',
+					name: 'logout',
+					component: () => import('../pages/logout.vue'),
+				},
+				{
+					path: 'oauth/register',
+					name: 'oauth register',
+					component: () => import('../pages/oauth/register.vue'),
 				},
 				{
 					path: '/:pathMatch(.*)*',

@@ -1,16 +1,9 @@
 <script lang="ts" setup>
-import { UserData, GuildData, DiscordData } from '@/lib/util/types'
 import DefaultLayoutWithVerticalNav from './components/DefaultLayoutWithVerticalNav.vue';
-
-const storedData = JSON.parse(localStorage.getItem('discord-data') || '');
-
-const userData: UserData = storedData?.user;
-const userGuilds: GuildData[] = storedData?.transformedGuilds.sort((guild: GuildData) => !guild.botInGuild);
-const discordData: DiscordData = { userData, userGuilds };
 </script>
 
 <template>
-	<DefaultLayoutWithVerticalNav v-bind="{ discordData }">
+	<DefaultLayoutWithVerticalNav>
 		<RouterView />
 	</DefaultLayoutWithVerticalNav>
 </template>
