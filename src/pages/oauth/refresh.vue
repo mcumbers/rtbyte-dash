@@ -4,7 +4,6 @@ const router = useRouter();
 import { useLoginDataStore } from '@/stores/loginData';
 const loginData = useLoginDataStore();
 
-
 import { useTheme } from 'vuetify';
 const vuetifyTheme = useTheme();
 import darkThemeLogo from '@images/wordmark-dark.svg?raw';
@@ -18,14 +17,11 @@ const logo = computed(() => {
 const errorTimeout = 3 * 1000;
 const errorRedirect = 5 * 1000;
 
-const oAuthCode = new URL(window.location.href).searchParams.get('code');
 let showError = false;
 
 onMounted(async () => {
-	if (oAuthCode) {
-		const fetchedData = await loginData.login(oAuthCode ?? '');
-		if (fetchedData?.userData?.id) return router.push({ name: 'guilds' });
-	}
+	const fetchedData = await loginData.refreshData();
+	if (fetchedData?.userData?.id) return router.push({ name: 'guilds' });
 
 	setTimeout(() => {
 		showError = true;

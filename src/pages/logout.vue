@@ -1,6 +1,11 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
+import { useLoginDataStore } from '@/stores/loginData';
+const loginData = useLoginDataStore();
 
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+import { useTheme } from 'vuetify'
 import darkThemeLogo from '@images/wordmark-dark.svg?raw'
 import lightThemeLogo from '@images/wordmark-light.svg?raw'
 const vuetifyTheme = useTheme()
@@ -11,13 +16,11 @@ const logo = computed(() => {
 })
 
 onMounted(async () => {
-	localStorage.clear();
-	document.cookie = 'RTBYTE_AUTH' + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-	window.location.replace('/login');
-})
+	await loginData.logOut();
+	loginData.$reset();
+	router.push({ name: 'login' });
+});
 </script>
-
-
 
 <template>
 	<div class="auth-wrapper d-flex align-center justify-center pa-4">
@@ -25,7 +28,7 @@ onMounted(async () => {
 			<VCardItem class="justify-center">
 				<template #prepend>
 					<div class="d-flex">
-						<div v-html="logo" />
+						<div v-html="logo"></div>
 					</div>
 				</template>
 			</VCardItem>

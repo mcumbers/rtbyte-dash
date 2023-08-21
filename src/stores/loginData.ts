@@ -1,4 +1,7 @@
 import { defineStore } from 'pinia';
+import { BotAPIHost } from '@/lib/util/constants';
+import axios from 'axios';
+const botAPI = axios.create({ baseURL: BotAPIHost, withCredentials: true });
 
 export interface UserData {
 	id: string,
@@ -30,7 +33,7 @@ export interface GuildData {
 }
 
 export const useLoginDataStore = defineStore('loginData', {
-	state: () => ({ userData: null as UserData | null, userGuilds: [] as GuildData[] }),
+	state: () => ({ userData: null as UserData | null, userGuilds: [] as GuildData[], lastRefresh: 0 as Number }),
 	getters: {},
 	actions: {
 		avatarURL(userData: UserData) {
@@ -40,6 +43,40 @@ export const useLoginDataStore = defineStore('loginData', {
 		iconURL(guildData: GuildData) {
 			const fileExt: string = guildData.icon.startsWith('a_') ? 'gif' : 'png';
 			return `https://cdn.discordapp.com/icons/${guildData.id}/${guildData.icon}.${fileExt}`;
+		},
+		async login(oAuthCode: string) {
+			try {
+				// Post the oAuth Code to the bot to authenticate
+				const response = await botAPI.post('/oauth/callback', { code: oAuthCode });
+
+				// Grab the login data from the response, and put it in our app's store
+				this.$patch({ userData: response.data.user, userGuilds: response.data.transformedGuilds, lastRefresh: Date.now() });
+
+				return this;
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async logOut() {
+			try {
+				// Tell the bot to invalidate our token
+				await botAPI.post('/oauth/logout');
+			} catch (error) {
+				console.log(error);
+			}
+		},
+		async refreshData() {
+			try {
+				// Post the oAuth Code to the bot to authenticate
+				const response = await botAPI.post('/oauth/refresh');
+
+				// Grab the login data from the response, and put it in our app's store
+				this.$patch({ userData: response.data.user, userGuilds: response.data.transformedGuilds, lastRefresh: Date.now() });
+			} catch (error) {
+				console.log(error);
+			}
+
+			return this;
 		}
 	},
 	persist: true

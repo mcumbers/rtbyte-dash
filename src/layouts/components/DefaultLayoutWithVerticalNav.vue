@@ -34,6 +34,10 @@ import UserProfile from '@/layouts/components/UserProfile.vue'
 					<VIcon icon="mdi-discord" />
 				</IconBtn>
 
+				<IconBtn class="me-2" @click="loginData.refreshData()">
+					<VIcon icon="mdi-refresh" />
+				</IconBtn>
+
 				<NavbarThemeSwitcher class="me-2" />
 
 				<UserProfile v-if="loginData.userData" v-bind="{ userData: loginData.userData }" />
