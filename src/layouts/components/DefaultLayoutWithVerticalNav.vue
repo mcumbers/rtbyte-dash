@@ -38,10 +38,16 @@ onMounted(async () => {
 
 				<IconBtn class="me-2" href="https://rtbyte.xyz/discord" target="_blank" rel="noopener noreferrer">
 					<VIcon icon="mdi-discord" />
+					<VTooltip activator="parent" open-delay="1000" scroll-strategy="close">
+						RTByte Support Discord
+					</VTooltip>
 				</IconBtn>
 
 				<IconBtn class="me-2" @click="loginData.refreshData()">
 					<VIcon icon="mdi-refresh" />
+					<VTooltip activator="parent" open-delay="1000" scroll-strategy="close">
+						Refresh Discord Data
+					</VTooltip>
 				</IconBtn>
 
 				<NavbarThemeSwitcher class="me-2" />

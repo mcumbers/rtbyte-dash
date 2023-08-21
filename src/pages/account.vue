@@ -1,60 +1,85 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
-import AccountSettingsAccount from '@/views/pages/account-settings/AccountSettingsAccount.vue'
-import AccountSettingsNotification from '@/views/pages/account-settings/AccountSettingsNotification.vue'
-import AccountSettingsSecurity from '@/views/pages/account-settings/AccountSettingsSecurity.vue'
+import { useLoginDataStore } from '@/stores/loginData';
+const loginData = useLoginDataStore();
+import { useUserSettingsStore } from '@/stores/API Data/userSettings';
+const userSettingsStore = useUserSettingsStore();
 
-const route = useRoute()
+let userSettingsLocal = ref({ ...userSettingsStore.userSettings })
+const isAccountDeactivated = ref(false)
 
-const activeTab = ref(route.params.tab)
+const resetForm = () => {
+	userSettingsLocal.value = { ...userSettingsStore.userSettings }
+}
 
-// tabs
-const tabs = [
-  { title: 'Account', icon: 'mdi-account-outline', tab: 'account' },
-  { title: 'Security', icon: 'mdi-lock-open-outline', tab: 'security' },
-  { title: 'Notifications', icon: 'mdi-bell-outline', tab: 'notification' },
-]
+async function updateSettings() {
+	userSettingsStore.$patch({ userSettings: userSettingsLocal.value });
+	await userSettingsStore.update();
+	return resetForm();
+}
+
 </script>
 
 <template>
-  <div>
-    <VTabs
-      v-model="activeTab"
-      show-arrows
-    >
-      <VTab
-        v-for="item in tabs"
-        :key="item.icon"
-        :value="item.tab"
-      >
-        <VIcon
-          size="20"
-          start
-          :icon="item.icon"
-        />
-        {{ item.title }}
-      </VTab>
-    </VTabs>
-    <VDivider />
+	<VRow>
+		<VCol cols="12">
+			<VCard title="User Settings">
+				<VCardText class="d-flex flex-row mb-6">
+					<!-- 👉 Avatar -->
+					<VAvatar color="background" size="x-large">
+						<VImg :src="loginData.avatarURL(loginData.userData!)" />
+					</VAvatar>
+					<h3 class="ma-2 pa-2 pt-3">
+						{{ loginData.userData?.username }}{{ parseInt(loginData.userData?.discriminator ?? '') > 0 ?
+							`#${loginData.userData?.discriminator}` : '' }}
+					</h3>
+				</VCardText>
 
-    <VWindow
-      v-model="activeTab"
-      class="mt-5 disable-tab-transition"
-    >
-      <!-- Account -->
-      <VWindowItem value="account">
-        <AccountSettingsAccount />
-      </VWindowItem>
+				<VDivider />
 
-      <!-- Security -->
-      <VWindowItem value="security">
-        <AccountSettingsSecurity />
-      </VWindowItem>
+				<VCardText>
+					<!-- 👉 Form -->
+					<VForm class="mt-6">
+						<VRow>
+							<!-- 👉 Language -->
+							<VCol cols="12" md="6">
+								<VSelect v-model="userSettingsLocal!.chatLanguage" label="Language"
+									:items="['en-US', 'en-GB']" />
+							</VCol>
 
-      <!-- Notification -->
-      <VWindowItem value="notification">
-        <AccountSettingsNotification />
-      </VWindowItem>
-    </VWindow>
-  </div>
+							<!-- 👉 Measurement Units -->
+							<VCol cols="12" md="6">
+								<VSelect v-model="userSettingsLocal!.chatMeasurementUnits" label="Measurement Units"
+									:items="['imperial', 'metric']" />
+							</VCol>
+
+							<!-- 👉 Form Actions -->
+							<VCol cols="12" class="d-flex flex-wrap gap-4">
+								<VBtn @click.prevent="updateSettings()">
+									Save changes
+								</VBtn>
+								<VBtn color="secondary" variant="tonal" type="reset" @click.prevent="resetForm">
+									Reset
+								</VBtn>
+							</VCol>
+						</VRow>
+					</VForm>
+				</VCardText>
+			</VCard>
+		</VCol>
+
+		<VCol cols="12">
+			<!-- 👉 Deactivate Account -->
+			<VCard title="Deactivate Account">
+				<VCardText>
+					<div>
+						<VCheckbox v-model="isAccountDeactivated" label="I confirm my account deactivation" />
+					</div>
+
+					<VBtn :disabled="!isAccountDeactivated" color="error" class="mt-3">
+						Deactivate Account
+					</VBtn>
+				</VCardText>
+			</VCard>
+		</VCol>
+	</VRow>
 </template>

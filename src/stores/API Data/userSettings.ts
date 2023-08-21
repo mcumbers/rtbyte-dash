@@ -14,10 +14,12 @@ export const useUserSettingsStore = defineStore('userSettings', {
 			if (!userID) userID = this.userSettings?.id;
 			const response = await botAPI.get(`/users/${userID}/settings`);
 			this.$patch({ userSettings: response.data.data.userSettings });
+			return this;
 		},
 		async update() {
 			const response = await botAPI.post(`/users/${this.userSettings?.id}/settings`, { data: { userSettings: this.userSettings } });
 			this.$patch({ userSettings: response.data.data.userSettings });
+			return this;
 		}
 	},
 	persist: true
