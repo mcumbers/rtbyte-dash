@@ -5,10 +5,22 @@ import { useUserSettingsStore } from '@/stores/API Data/userSettings';
 const userSettingsStore = useUserSettingsStore();
 
 let userSettingsLocal = ref({ ...userSettingsStore.userSettings })
-const isAccountDeactivated = ref(false)
+let deactivateConfirm = ref(false);
 
 const resetForm = () => {
 	userSettingsLocal.value = { ...userSettingsStore.userSettings }
+}
+
+async function deactivateBotInteractions() {
+	userSettingsLocal.value.disableBot = true;
+	await updateSettings();
+	deactivateConfirm.value = false;
+}
+
+async function activateBotInteractions() {
+	userSettingsLocal.value.disableBot = false;
+	await updateSettings();
+	deactivateConfirm.value = false;
 }
 
 async function updateSettings() {
@@ -36,7 +48,7 @@ async function updateSettings() {
 
 				<VDivider />
 
-				<VCardText>
+				<VCardText v-if="!userSettingsStore.userSettings?.disableBot">
 					<!-- 👉 Form -->
 					<VForm class="mt-6">
 						<VRow>
@@ -64,19 +76,40 @@ async function updateSettings() {
 						</VRow>
 					</VForm>
 				</VCardText>
+				<VCardText v-if="userSettingsStore.userSettings?.disableBot">
+					<h1 class="ma-2 pa-2">
+						Bot Deactivated
+					</h1>
+					<p class="ma-2 pa-2">
+						You have opted out of using RTByte. You cannot use RTByte Commands or Features unless you Activate
+						them again.
+					</p>
+					<VBtn color="primary" class="mt-3" @click="activateBotInteractions()">
+						Activate Bot Interactions
+					</VBtn>
+				</VCardText>
 			</VCard>
 		</VCol>
 
-		<VCol cols="12">
-			<!-- 👉 Deactivate Account -->
-			<VCard title="Deactivate Account">
+		<VCol cols="12" v-if="!userSettingsStore.userSettings?.disableBot">
+			<!-- 👉 Opt Out -->
+			<VCard title="Opt Out">
 				<VCardText>
+					<p class="ma-2 pa-2">
+						If you do not want RTByte to store any of your personal information, you can Opt Out of using it.
+						Doing so will prevent you from using any commands or features of the bot.
+					</p>
+					<p class="ma-2 pa-2">
+						Note: This will not remove any records of moderator actions against you. That information remains
+						controlled by the Administrators of the servers in which the moderator actions took place.
+					</p>
 					<div>
-						<VCheckbox v-model="isAccountDeactivated" label="I confirm my account deactivation" />
+						<VCheckbox v-model="deactivateConfirm"
+							label="I want to Opt Out of RTByte storing my personal data" />
 					</div>
 
-					<VBtn :disabled="!isAccountDeactivated" color="error" class="mt-3">
-						Deactivate Account
+					<VBtn :disabled="!deactivateConfirm" color="error" class="mt-3" @click="deactivateBotInteractions()">
+						Deactivate Bot Interactions
 					</VBtn>
 				</VCardText>
 			</VCard>
