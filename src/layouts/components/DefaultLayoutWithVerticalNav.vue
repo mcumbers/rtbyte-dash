@@ -3,6 +3,8 @@ import { useRouter } from 'vue-router';
 const router = useRouter()
 import { useLoginDataStore } from '@/stores/loginData';
 const loginData = useLoginDataStore();
+import { useUserSettingsStore } from '@/stores/API Data/userSettings';
+const userSettingsStore = useUserSettingsStore();
 
 // Send browser to Login page if not logged in
 if (!loginData.userData || !loginData.userData.id) router.push({ name: 'login' });
@@ -16,6 +18,10 @@ import Footer from '@/layouts/components/Footer.vue'
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import UserProfile from '@/layouts/components/UserProfile.vue'
 
+onMounted(async () => {
+	// Fetch user's bot settings
+	await userSettingsStore.fetch(loginData?.userData?.id);
+});
 </script>
 
 <template>

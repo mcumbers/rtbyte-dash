@@ -5,6 +5,9 @@ const loginData = useLoginDataStore();
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
+import { useUserSettingsStore } from '@/stores/API Data/userSettings';
+const userSettingsStore = useUserSettingsStore();
+
 import { useTheme } from 'vuetify'
 import darkThemeLogo from '@images/wordmark-dark.svg?raw'
 import lightThemeLogo from '@images/wordmark-light.svg?raw'
@@ -18,6 +21,7 @@ const logo = computed(() => {
 onMounted(async () => {
 	await loginData.logOut();
 	loginData.$reset();
+	userSettingsStore.$reset();
 	router.push({ name: 'login' });
 });
 </script>
