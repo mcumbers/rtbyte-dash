@@ -19,8 +19,9 @@ const router = createRouter({
 					component: () => import('../pages/account.vue'),
 				},
 				{
-					path: 'typography',
-					component: () => import('../pages/typography.vue'),
+					path: 'guild-settings',
+					name: 'guild-settings',
+					component: () => import('../pages/guildSettings.vue'),
 				},
 				{
 					path: 'icons',

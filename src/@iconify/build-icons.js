@@ -43,6 +43,7 @@ const sources = {
         // 'json/gg.json',
         // Iconify JSON file (@iconify/json is a package name, /json/ is directory where files are, then filename)
         require.resolve('@iconify-json/mdi/icons.json'),
+		require.resolve('@iconify-json/ic/icons.json'),
         // Custom file with only few icons
         // {
         //   filename: require.resolve('@iconify-json/line-md/icons.json'),

@@ -1,24 +1,30 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
-const router = useRouter()
+const router = useRouter();
+
 import { useLoginDataStore } from '@/stores/loginData';
 const loginData = useLoginDataStore();
+
 import { useUserSettingsStore } from '@/stores/API Data/userSettings';
 const userSettingsStore = useUserSettingsStore();
+
+import { useAppState } from '@/stores/appState';
+const appState = useAppState();
 
 // Send browser to Login page if not logged in
 if (!loginData.userData || !loginData.userData.id) router.push({ name: 'login' });
 // If user has opted out of bot interactions, only let them access Account Settings
 if (userSettingsStore.userSettings?.disableBot) router.push({ name: 'account' });
 
-import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
-import VerticalNavLink from '@layouts/components/VerticalNavLink.vue'
-import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue'
+import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue';
+import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
+import VerticalNavSectionTitle from '@/@layouts/components/VerticalNavSectionTitle.vue';
 
 // Components
-import Footer from '@/layouts/components/Footer.vue'
-import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
-import UserProfile from '@/layouts/components/UserProfile.vue'
+import Footer from '@/layouts/components/Footer.vue';
+import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue';
+import UserProfile from '@/layouts/components/UserProfile.vue';
+import SelectedGuild from '@/components/SelectedGuild.vue';
 
 onMounted(async () => {
 	// Fetch user's bot settings
@@ -36,10 +42,12 @@ onMounted(async () => {
 					<VIcon icon="mdi-menu" />
 				</IconBtn>
 
+				<SelectedGuild v-if="appState.selectedGuild" v-bind="{ guildData: appState.selectedGuild }" />
+
 				<VSpacer />
 
 				<IconBtn class="me-2" href="https://rtbyte.xyz/discord" target="_blank" rel="noopener noreferrer">
-					<VIcon icon="mdi-discord" />
+					<VIcon icon="ic-baseline-discord" />
 					<VTooltip activator="parent" open-delay="1000" scroll-strategy="close">
 						RTByte Support Discord
 					</VTooltip>
@@ -72,12 +80,12 @@ onMounted(async () => {
 
 			<!-- 👉 Pages -->
 			<VerticalNavSectionTitle :item="{
-				heading: 'Pages',
+				heading: 'Bot Settings',
 			}" />
 			<VerticalNavLink :item="{
-				title: 'Login',
-				icon: 'mdi-login',
-				to: '/login',
+				title: 'Server Settings',
+				icon: 'ic-baseline-discord',
+				to: '/guild-settings',
 			}" />
 			<VerticalNavLink :item="{
 				title: 'Register',

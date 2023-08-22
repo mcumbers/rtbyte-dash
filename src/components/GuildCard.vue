@@ -8,16 +8,23 @@ import { botInviteString } from '@/lib/util/helpers';
 import { useLoginDataStore, GuildData } from '@/stores/loginData';
 const loginData = useLoginDataStore();
 
+const guildIcon = computed(() => props.guildData ? loginData.iconURL(props.guildData) : '');
+
+import { useAppState } from '@/stores/appState';
+const appState = useAppState();
+
+const isSelected = computed(() => props.guildData?.id === appState.selectedGuild?.id);
+
 </script>
 
 <template>
 	<VCol cols="12" md="3">
 		<!-- If guildData is provided -->
-		<VCard v-if="props.guildData">
+		<VCard v-if="props.guildData" :variant="isSelected ? 'outlined' : undefined" :disabled="isSelected">
 			<VCardText class="position-relative text-center">
 				<!-- Guild Image -->
 				<VAvatar size="75" class="avatar-center" color="#2B2D31">
-					<VImg :src="loginData.iconURL(props.guildData)" />
+					<VImg :src="guildIcon" />
 				</VAvatar>
 
 				<!-- Guild Name, Subtitle & Action Button -->
@@ -27,19 +34,23 @@ const loginData = useLoginDataStore();
 					</div>
 				</div>
 			</VCardText>
-			<div class="pb-5">
+			<div class="pb-5" v-if="!isSelected">
 				<!-- Bright button showing if guild can be managed and bot is in guild -->
 				<VBtn v-if="props.guildData.botInGuild && props.guildData.canManageServer"
-					style="left: 50%; transform: translateX(-50%)">Manage Server</VBtn>
+					style="left: 50%; transform: translateX(-50%)" @click="appState.selectGuild(props.guildData)">
+					Manage Server
+				</VBtn>
 				<!-- Dim button if bot can be added to guild -->
 				<VBtn variant="tonal" :href=botInviteString(props.guildData) target="_blank"
 					v-if="!props.guildData.botInGuild" :disabled="!props.guildData.canManageServer"
-					style="left: 50%; transform: translateX(-50%)">Add To
-					Server
+					style="left: 50%; transform: translateX(-50%)">
+					Add To Server
 				</VBtn>
 				<!-- Dim & Disabled button if user can't manage guild -->
 				<VBtn v-if="props.guildData.botInGuild && !props.guildData.canManageServer" variant="tonal" disabled
-					style="left: 50%; transform: translateX(-50%)">Manage Server</VBtn>
+					style="left: 50%; transform: translateX(-50%)">
+					Manage Server
+				</VBtn>
 				<!-- Tooltip on button hover if user can't add bot to guild  -->
 				<VTooltip v-if="!props.guildData.botInGuild && !props.guildData.canManageServer" activator="parent"
 					open-delay="100" scroll-strategy="close">
@@ -50,6 +61,12 @@ const loginData = useLoginDataStore();
 					open-delay="100" scroll-strategy="close">
 					You don't have permission to manage this server.
 				</VTooltip>
+			</div>
+			<!-- Button displayed when this guild is selected -->
+			<div class="pb-5" v-if="isSelected">
+				<VBtn style="left: 50%; transform: translateX(-50%)" disabled>
+					Managing Server...
+				</VBtn>
 			</div>
 		</VCard>
 		<!-- If guildData is not provided -->
