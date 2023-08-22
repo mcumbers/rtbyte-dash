@@ -36,14 +36,6 @@ export const useLoginDataStore = defineStore('loginData', {
 	state: () => ({ userData: null as UserData | null, userGuilds: [] as GuildData[], lastRefresh: 0 as Number }),
 	getters: {},
 	actions: {
-		avatarURL(userData: UserData) {
-			const fileExt: string = userData.avatar.startsWith('a_') ? 'gif' : 'png';
-			return `https://cdn.discordapp.com/avatars/${userData.id}/${userData.avatar}.${fileExt}`;
-		},
-		iconURL(guildData: GuildData) {
-			const fileExt: string = guildData.icon.startsWith('a_') ? 'gif' : 'png';
-			return `https://cdn.discordapp.com/icons/${guildData.id}/${guildData.icon}.${fileExt}`;
-		},
 		async login(oAuthCode: string) {
 			try {
 				// Post the oAuth Code to the bot to authenticate

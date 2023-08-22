@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useLoginDataStore, UserData } from '@/stores/loginData';
-const loginData = useLoginDataStore();
-import { isBotOwner } from '@/lib/util/helpers';
+import { UserData } from '@/stores/loginData';
+import { isBotOwner, avatarURL } from '@/lib/util/helpers';
 interface Props {
 	userData: UserData
 }
@@ -10,7 +9,7 @@ const props = defineProps<Props>()
 
 <template>
 	<VAvatar class="cursor-pointer" color="primary">
-		<VImg :src="loginData.avatarURL(props.userData)" />
+		<VImg :src="avatarURL(props.userData)" />
 
 		<!-- SECTION Menu -->
 		<VMenu activator="parent" width="230" location="bottom end" offset="14px">
@@ -20,7 +19,7 @@ const props = defineProps<Props>()
 					<template #prepend>
 						<VListItemAction start>
 							<VAvatar color="background">
-								<VImg :src="loginData.avatarURL(props.userData)" />
+								<VImg :src="avatarURL(props.userData)" />
 							</VAvatar>
 						</VListItemAction>
 					</template>

@@ -5,15 +5,41 @@ interface Props {
 const props = defineProps<Props>()
 
 import { botInviteString } from '@/lib/util/helpers';
-import { useLoginDataStore, GuildData } from '@/stores/loginData';
-const loginData = useLoginDataStore();
-
-const guildIcon = computed(() => props.guildData ? loginData.iconURL(props.guildData) : '');
+import { GuildData } from '@/stores/loginData';
+import { iconURL } from '@/lib/util/helpers';
 
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
 
-const isSelected = computed(() => props.guildData?.id === appState.selectedGuild?.id);
+import { useGuildSettingsStore } from '@/stores/API Data/guildSettings';
+const guildSettingsStore = useGuildSettingsStore();
+
+const guildIcon = computed(() => props.guildData ? iconURL(props.guildData) : '');
+
+const isSelected = computed(() => {
+	if (!props.guildData) return false;
+	if (!appState.selectedGuild) return false;
+	if (props.guildData.id !== appState.selectedGuild.id) return false;
+	return true;
+});
+
+async function selectGuild(guildData: GuildData) {
+	appState.selectGuild(props.guildData!);
+	await guildSettingsStore.fetch(props.guildData!.id);
+}
+
+const tooltipText = computed(() => {
+	if (!props.guildData) return null;
+	if (props.guildData.canManageServer) return null;
+	if (props.guildData.botInGuild) return 'You don\'t have permission to manage this server.';
+	return 'Ask an Administrator to add RTByte to this server!';
+});
+
+const buttonText = computed(() => {
+	if (!props.guildData) return null;
+	if (props.guildData.botInGuild) return 'Manage Server';
+	return 'Add to Server';
+});
 
 </script>
 
@@ -35,38 +61,17 @@ const isSelected = computed(() => props.guildData?.id === appState.selectedGuild
 				</div>
 			</VCardText>
 			<div class="pb-5" v-if="!isSelected">
-				<!-- Bright button showing if guild can be managed and bot is in guild -->
-				<VBtn v-if="props.guildData.botInGuild && props.guildData.canManageServer"
-					style="left: 50%; transform: translateX(-50%)" @click="appState.selectGuild(props.guildData)">
-					Manage Server
-				</VBtn>
-				<!-- Dim button if bot can be added to guild -->
-				<VBtn variant="tonal" :href=botInviteString(props.guildData) target="_blank"
-					v-if="!props.guildData.botInGuild" :disabled="!props.guildData.canManageServer"
-					style="left: 50%; transform: translateX(-50%)">
-					Add To Server
-				</VBtn>
 				<!-- Dim & Disabled button if user can't manage guild -->
-				<VBtn v-if="props.guildData.botInGuild && !props.guildData.canManageServer" variant="tonal" disabled
-					style="left: 50%; transform: translateX(-50%)">
-					Manage Server
+				<VBtn v-if="buttonText || isSelected"
+					:variant="!props.guildData.canManageServer || !props.guildData.botInGuild ? 'tonal' : undefined"
+					:disabled="!props.guildData.canManageServer || isSelected"
+					:href="!props.guildData.botInGuild ? botInviteString(props.guildData) : undefined"
+					style="left: 50%; transform: translateX(-50%)" @click="selectGuild(props.guildData)">
+					{{ isSelected ? 'Managing Server...' : buttonText }}
 				</VBtn>
-				<!-- Tooltip on button hover if user can't add bot to guild  -->
-				<VTooltip v-if="!props.guildData.botInGuild && !props.guildData.canManageServer" activator="parent"
-					open-delay="100" scroll-strategy="close">
-					Ask an Administrator to add RTByte to this server!
+				<VTooltip v-if="tooltipText" activator="parent" open-delay="100" scroll-strategy="close">
+					{{ tooltipText }}
 				</VTooltip>
-				<!-- Tooltip on button hover if user can't manage server -->
-				<VTooltip v-if="props.guildData.botInGuild && !props.guildData.canManageServer" activator="parent"
-					open-delay="100" scroll-strategy="close">
-					You don't have permission to manage this server.
-				</VTooltip>
-			</div>
-			<!-- Button displayed when this guild is selected -->
-			<div class="pb-5" v-if="isSelected">
-				<VBtn style="left: 50%; transform: translateX(-50%)" disabled>
-					Managing Server...
-				</VBtn>
 			</div>
 		</VCard>
 		<!-- If guildData is not provided -->

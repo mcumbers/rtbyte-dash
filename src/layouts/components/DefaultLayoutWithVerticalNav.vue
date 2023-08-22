@@ -11,10 +11,12 @@ const userSettingsStore = useUserSettingsStore();
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
 
-// Send browser to Login page if not logged in
-if (!loginData.userData || !loginData.userData.id) router.push({ name: 'login' });
-// If user has opted out of bot interactions, only let them access Account Settings
-if (userSettingsStore.userSettings?.disableBot) router.push({ name: 'account' });
+onMounted(() => {
+	// Send browser to Login page if not logged in
+	if (!loginData.userData || !loginData.userData.id) router.push({ name: 'login' });
+	// If user has opted out of bot interactions, only let them access Account Settings
+	if (userSettingsStore.userSettings?.disableBot) router.push({ name: 'account' });
+});
 
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue';
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
@@ -85,8 +87,8 @@ onMounted(async () => {
 			<VerticalNavLink :item="{
 				title: 'Server Settings',
 				icon: 'ic-baseline-discord',
-				to: '/guild-settings',
-			}" />
+				to: '/guild-settings'
+			}" :class="appState.selectedGuild ? undefined : 'disabled'" />
 			<VerticalNavLink :item="{
 				title: 'Register',
 				icon: 'mdi-account-plus-outline',

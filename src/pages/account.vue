@@ -4,6 +4,8 @@ const loginData = useLoginDataStore();
 import { useUserSettingsStore } from '@/stores/API Data/userSettings';
 const userSettingsStore = useUserSettingsStore();
 
+import { avatarURL } from '@/lib/util/helpers';
+
 let userSettingsLocal = ref({ ...userSettingsStore.userSettings })
 let deactivateConfirm = ref(false);
 
@@ -38,7 +40,7 @@ async function updateSettings() {
 				<VCardText class="d-flex flex-row mb-6">
 					<!-- 👉 Avatar -->
 					<VAvatar color="background" size="x-large">
-						<VImg :src="loginData.avatarURL(loginData.userData!)" />
+						<VImg :src="avatarURL(loginData.userData!)" />
 					</VAvatar>
 					<h3 class="ma-2 pa-2 pt-3">
 						{{ loginData.userData?.username }}{{ parseInt(loginData.userData?.discriminator ?? '') > 0 ?
@@ -104,7 +106,7 @@ async function updateSettings() {
 						controlled by the Administrators of the servers in which the moderator actions took place.
 					</p>
 					<div>
-						<VCheckbox v-model="deactivateConfirm"
+						<VCheckbox v-model="deactivateConfirm" class="pl-1"
 							label="I want to Opt Out of RTByte storing my personal data" />
 					</div>
 
