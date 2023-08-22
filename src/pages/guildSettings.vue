@@ -1,8 +1,18 @@
 <script lang="ts" setup>
+import { useRouter } from 'vue-router';
+const router = useRouter();
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
 import { useGuildSettingsStore } from '@/stores/API Data/guildSettings';
 const guildSettingsStore = useGuildSettingsStore();
+
+onMounted(() => {
+	if (!appState.selectedGuild) router.push('guilds');
+});
+
+onUpdated(() => {
+	if (!appState.selectedGuild) router.push('guilds');
+});
 
 let guildSettingsLocal = ref({ ...guildSettingsStore.guildSettings })
 
@@ -15,15 +25,10 @@ async function updateSettings() {
 	await guildSettingsStore.update();
 	return resetForm();
 }
-
-onMounted(async () => {
-	await guildSettingsStore.fetch(appState.selectedGuild?.id);
-});
-
 </script>
 
 <template>
-	<VCard v-for="setting, value in guildSettingsStore.guildSettings">
+	<VCard v-for="value, setting in guildSettingsStore.guildSettings">
 		<VCardTitle>
 			{{ setting }}
 		</VCardTitle>

@@ -13,7 +13,7 @@ export const useGuildSettingsStore = defineStore('guildSettings', {
 		async fetch(guildID?: string) {
 			if (!guildID) guildID = this.guildSettings?.id;
 			const response = await botAPI.get(`/guilds/${guildID}/settings`);
-			this.$patch({ guildSettings: response.data.data.userSettings });
+			this.$patch({ guildSettings: response.data.data.guildSettings });
 			return this;
 		},
 		async update() {
