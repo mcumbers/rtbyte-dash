@@ -113,35 +113,6 @@ watch(route, () => {
 					to: '/settings/mod-actions',
 				}" :class="appState.selectedGuild ? undefined : 'disabled'" />
 			</div>
-			<!-- 👉 User Interface -->
-			<VerticalNavSectionTitle :item="{
-				heading: 'User Interface',
-			}" />
-			<VerticalNavLink :item="{
-				title: 'Typography',
-				icon: 'mdi-alpha-t-box-outline',
-				to: '/typography',
-			}" />
-			<VerticalNavLink :item="{
-				title: 'Icons',
-				icon: 'mdi-eye-outline',
-				to: '/icons',
-			}" />
-			<VerticalNavLink :item="{
-				title: 'Cards',
-				icon: 'mdi-credit-card-outline',
-				to: '/cards',
-			}" />
-			<VerticalNavLink :item="{
-				title: 'Tables',
-				icon: 'mdi-table',
-				to: '/tables',
-			}" />
-			<VerticalNavLink :item="{
-				title: 'Form Layouts',
-				icon: 'mdi-form-select',
-				to: '/form-layouts',
-			}" />
 		</template>
 
 		<!-- 👉 Pages -->
