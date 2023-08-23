@@ -22,7 +22,13 @@ import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue';
 import UserProfile from '@/layouts/components/UserProfile.vue';
 import SelectedGuild from '@/components/SelectedGuild.vue';
 
+const botDisabled = computed(() => {
+	return userSettingsStore.userSettings?.disableBot;
+});
+
 onMounted(async () => {
+	// Force a logout -> login redirect if loginData isn't present or usable
+	if (!loginData.userData || !loginData.userData.id) router.push({ name: 'logout' });
 	// Fetch user's bot settings
 	if (!userSettingsStore.userSettings) await userSettingsStore.fetch(loginData?.userData?.id);
 	// If user has opted out of bot interactions, only let them access Account Settings
@@ -76,7 +82,7 @@ watch(route, () => {
 				title: 'Servers',
 				icon: 'mdi-home-outline',
 				to: '/guilds',
-			}" />
+			}" :class="botDisabled ? 'disabled' : undefined" />
 			<VerticalNavLink :item="{
 				title: 'Account Settings',
 				icon: 'mdi-account-cog-outline',
