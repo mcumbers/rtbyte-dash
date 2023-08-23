@@ -29,8 +29,9 @@ const router = createRouter({
 					component: () => import('../pages/guildSettingsInfoLogs.vue'),
 				},
 				{
-					path: 'cards',
-					component: () => import('../pages/cards.vue'),
+					path: 'settings/mod-actions',
+					name: 'settings-mod-actions',
+					component: () => import('../pages/guildSettingsModActions.vue'),
 				},
 				{
 					path: 'tables',

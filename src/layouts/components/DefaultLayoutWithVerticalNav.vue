@@ -107,6 +107,11 @@ watch(route, () => {
 					icon: 'mdi-form-select',
 					to: '/settings/info-logs',
 				}" :class="appState.selectedGuild ? undefined : 'disabled'" />
+				<VerticalNavLink :item="{
+					title: 'Mod Actions Settings',
+					icon: 'mdi-moderator',
+					to: '/settings/mod-actions',
+				}" :class="appState.selectedGuild ? undefined : 'disabled'" />
 			</div>
 			<!-- 👉 User Interface -->
 			<VerticalNavSectionTitle :item="{
