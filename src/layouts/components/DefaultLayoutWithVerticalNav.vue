@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
+const route = useRoute();
 
 import { useLoginDataStore } from '@/stores/loginData';
 const loginData = useLoginDataStore();
@@ -10,13 +11,6 @@ const userSettingsStore = useUserSettingsStore();
 
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
-
-onMounted(() => {
-	// Send browser to Login page if not logged in
-	if (!loginData.userData || !loginData.userData.id) router.push({ name: 'login' });
-	// If user has opted out of bot interactions, only let them access Account Settings
-	if (userSettingsStore.userSettings?.disableBot) router.push({ name: 'account' });
-});
 
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue';
 import VerticalNavLink from '@layouts/components/VerticalNavLink.vue';
@@ -30,7 +24,16 @@ import SelectedGuild from '@/components/SelectedGuild.vue';
 
 onMounted(async () => {
 	// Fetch user's bot settings
-	await userSettingsStore.fetch(loginData?.userData?.id);
+	if (!userSettingsStore.userSettings) await userSettingsStore.fetch(loginData?.userData?.id);
+	// If user has opted out of bot interactions, only let them access Account Settings
+	if (userSettingsStore.userSettings?.disableBot && route.path !== '/account-settings') router.push({ name: 'account-settings' });
+});
+
+watch(route, () => {
+	// If user has opted out of bot interactions, only let them access Account Settings
+	if (userSettingsStore.userSettings?.disableBot && route.path !== '/account-settings') router.push({ name: 'account-settings' });
+	// Force a logout -> login redirect if loginData isn't present or usable
+	if (!loginData.userData || !loginData.userData.id) router.push({ name: 'logout' });
 });
 </script>
 
@@ -77,29 +80,28 @@ onMounted(async () => {
 			<VerticalNavLink :item="{
 				title: 'Account Settings',
 				icon: 'mdi-account-cog-outline',
-				to: '/account',
+				to: '/account-settings',
 			}" />
 
 			<!-- 👉 Pages -->
 			<VerticalNavSectionTitle :item="{
 				heading: 'Bot Settings',
 			}" />
-			<VerticalNavLink :item="{
-				title: 'Server Settings',
-				icon: 'ic-baseline-discord',
-				to: '/guild-settings'
-			}" :class="appState.selectedGuild ? undefined : 'disabled'" />
-			<VerticalNavLink :item="{
-				title: 'Register',
-				icon: 'mdi-account-plus-outline',
-				to: '/register',
-			}" />
-			<VerticalNavLink :item="{
-				title: 'Error',
-				icon: 'mdi-information-outline',
-				to: '/no-existence',
-			}" />
-
+			<div>
+				<VTooltip activator="parent" v-if="!appState.selectedGuild" location="bottom">
+					Select a Server to access Settings
+				</VTooltip>
+				<VerticalNavLink :item="{
+					title: 'Server Settings',
+					icon: 'ic-baseline-discord',
+					to: '/settings'
+				}" :class="appState.selectedGuild ? undefined : 'disabled'" />
+				<VerticalNavLink :item="{
+					title: 'Info Logs Settings',
+					icon: 'mdi-form-select',
+					to: '/settings/info-logs',
+				}" :class="appState.selectedGuild ? undefined : 'disabled'" />
+			</div>
 			<!-- 👉 User Interface -->
 			<VerticalNavSectionTitle :item="{
 				heading: 'User Interface',

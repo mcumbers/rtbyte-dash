@@ -31,6 +31,11 @@ async function updateSettings() {
 	return resetForm();
 }
 
+onMounted(async () => {
+	if (!userSettingsStore.userSettings) await userSettingsStore.fetch(loginData.userData!.id);
+	userSettingsLocal = ref({ ...userSettingsStore.userSettings });
+	resetForm();
+});
 </script>
 
 <template>
@@ -86,7 +91,7 @@ async function updateSettings() {
 						You have opted out of using RTByte. You cannot use RTByte Commands or Features unless you Activate
 						them again.
 					</p>
-					<VBtn color="primary" class="mt-3" @click="activateBotInteractions()">
+					<VBtn color="primary" class="mt-3 ml-4" @click="activateBotInteractions()">
 						Activate Bot Interactions
 					</VBtn>
 				</VCardText>
@@ -106,11 +111,12 @@ async function updateSettings() {
 						controlled by the Administrators of the servers in which the moderator actions took place.
 					</p>
 					<div>
-						<VCheckbox v-model="deactivateConfirm" class="pl-1"
+						<VCheckbox v-model="deactivateConfirm" class="ml-4"
 							label="I want to Opt Out of RTByte storing my personal data" />
 					</div>
 
-					<VBtn :disabled="!deactivateConfirm" color="error" class="mt-3" @click="deactivateBotInteractions()">
+					<VBtn :disabled="!deactivateConfirm" color="error" class="mt-3 ml-4"
+						@click="deactivateBotInteractions()">
 						Deactivate Bot Interactions
 					</VBtn>
 				</VCardText>

@@ -3,18 +3,13 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
+// Return user to guild selection if no guild selected
+if (!appState.selectedGuild) router.push({ name: 'guilds' });
+
 import { useGuildSettingsStore } from '@/stores/API Data/guildSettings';
 const guildSettingsStore = useGuildSettingsStore();
 
-onMounted(() => {
-	if (!appState.selectedGuild) router.push('guilds');
-});
-
-onUpdated(() => {
-	if (!appState.selectedGuild) router.push('guilds');
-});
-
-let guildSettingsLocal = ref({ ...guildSettingsStore.guildSettings })
+let guildSettingsLocal = ref({ ...guildSettingsStore.guildSettings });
 
 const resetForm = () => {
 	guildSettingsLocal.value = { ...guildSettingsStore.guildSettings }
@@ -25,10 +20,20 @@ async function updateSettings() {
 	await guildSettingsStore.update();
 	return resetForm();
 }
+
+onMounted(async () => {
+	if (!guildSettingsStore.guildSettings) await guildSettingsStore.fetch(appState.selectedGuild!.id);
+	resetForm();
+});
+
+// Return user to guild selection if guild selection cleared on this page
+appState.$subscribe(() => {
+	if (!appState.selectedGuild) router.push({ name: 'guilds' });
+});
 </script>
 
 <template>
-	<VCard v-for="value, setting in guildSettingsStore.guildSettings">
+	<VCard v-for="value, setting in guildSettingsLocal">
 		<VCardTitle>
 			{{ setting }}
 		</VCardTitle>

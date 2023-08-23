@@ -42,7 +42,7 @@ export const useLoginDataStore = defineStore('loginData', {
 				const response = await botAPI.post('/oauth/callback', { code: oAuthCode });
 
 				// Grab the login data from the response, and put it in our app's store
-				this.$patch({ userData: response.data.user, userGuilds: response.data.transformedGuilds, lastRefresh: Date.now() });
+				this.$patch({ userData: response.data.user, userGuilds: response.data.guilds, lastRefresh: Date.now() });
 
 				return this;
 			} catch (error) {
@@ -63,7 +63,7 @@ export const useLoginDataStore = defineStore('loginData', {
 				const response = await botAPI.post('/oauth/refresh');
 
 				// Grab the login data from the response, and put it in our app's store
-				this.$patch({ userData: response.data.user, userGuilds: response.data.transformedGuilds, lastRefresh: Date.now() });
+				this.$patch({ userData: response.data.user, userGuilds: response.data.guilds, lastRefresh: Date.now() });
 			} catch (error) {
 				console.log(error);
 			}

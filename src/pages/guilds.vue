@@ -3,26 +3,27 @@ import { useLoginDataStore } from '@/stores/loginData';
 import GuildCard from '@/components/GuildCard.vue';
 const loginData = useLoginDataStore();
 
-// Make a local array of the loginData guilds
-const guilds = computed(() => {
-	return new Array(...loginData.userGuilds)
+let guilds = ref(loginData!.userGuilds);
+
+onMounted(() => {
+	guilds.value = loginData!.userGuilds
 		// Sort them Alphabetically
-		.sort((guildA, guildB) => guildA.name > guildB.name ? 0 : 1)
+		.sort((a, b) => a.name > b.name ? 1 : 0)
 		// Sort them by how you can interact with them:
 		// Highest will be guilds you can manage which also have the bot
 		// Next are guilds you manage that you can add the bot to
 		// Followed by guilds that have the bot, but you can't manage
 		// And finally, guilds you can't manage, and you can't add the bot to
-		.sort((guildA, guildB) => {
-			let pointsA = 0;
-			if (guildA.canManageServer && guildA.botInGuild) pointsA += 3;
-			if (guildA.canManageServer) pointsA += 2;
-			if (guildA.botInGuild) pointsA += 1;
-			let pointsB = 0;
-			if (guildB.canManageServer && guildB.botInGuild) pointsB += 3;
-			if (guildB.canManageServer) pointsB += 2;
-			if (guildB.botInGuild) pointsB += 1;
-			return pointsA > pointsB ? 0 : 1;
+		.sort((a, b) => {
+			let aPoints = 0;
+			if (a.canManageServer && a.botInGuild) aPoints += 3;
+			if (a.canManageServer) aPoints += 2;
+			if (a.botInGuild) aPoints += 1;
+			let bPoints = 0;
+			if (b.canManageServer && b.botInGuild) bPoints += 3;
+			if (b.canManageServer) bPoints += 2;
+			if (b.botInGuild) bPoints += 1;
+			return bPoints - aPoints;
 		});
 });
 </script>

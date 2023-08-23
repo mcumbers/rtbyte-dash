@@ -11,9 +11,6 @@ import { iconURL } from '@/lib/util/helpers';
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
 
-import { useGuildSettingsStore } from '@/stores/API Data/guildSettings';
-const guildSettingsStore = useGuildSettingsStore();
-
 const guildIcon = computed(() => props.guildData ? iconURL(props.guildData) : '');
 
 const isSelected = computed(() => {
@@ -23,9 +20,8 @@ const isSelected = computed(() => {
 	return true;
 });
 
-async function selectGuild(guildData: GuildData) {
+function selectGuild() {
 	appState.selectGuild(props.guildData!);
-	await guildSettingsStore.fetch(props.guildData!.id);
 }
 
 const tooltipText = computed(() => {
@@ -66,7 +62,7 @@ const buttonText = computed(() => {
 					:variant="!props.guildData.canManageServer || !props.guildData.botInGuild ? 'tonal' : undefined"
 					:disabled="!props.guildData.canManageServer || isSelected"
 					:href="!props.guildData.botInGuild ? botInviteString(props.guildData) : undefined"
-					style="left: 50%; transform: translateX(-50%)" @click="selectGuild(props.guildData)">
+					style="left: 50%; transform: translateX(-50%)" @click="selectGuild()">
 					{{ isSelected ? 'Managing Server...' : buttonText }}
 				</VBtn>
 				<VTooltip v-if="tooltipText" activator="parent" open-delay="100" scroll-strategy="close">

@@ -8,7 +8,6 @@ export const useAppState = defineStore('appState', {
 	getters: {},
 	actions: {
 		selectGuild(guild: GuildData) {
-			console.log(guild);
 			return this.$patch({ selectedGuild: guild });
 		},
 		clearSelectedGuild() {

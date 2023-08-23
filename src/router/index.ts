@@ -14,18 +14,19 @@ const router = createRouter({
 					component: () => import('../pages/guilds.vue'),
 				},
 				{
-					path: 'account',
-					name: 'account',
+					path: 'account-settings',
+					name: 'account-settings',
 					component: () => import('../pages/account.vue'),
 				},
 				{
-					path: 'guild-settings',
-					name: 'guild-settings',
+					path: 'settings',
+					name: 'settings',
 					component: () => import('../pages/guildSettings.vue'),
 				},
 				{
-					path: 'icons',
-					component: () => import('../pages/icons.vue'),
+					path: 'settings/info-logs',
+					name: 'settings-info-logs',
+					component: () => import('../pages/guildSettingsInfoLogs.vue'),
 				},
 				{
 					path: 'cards',

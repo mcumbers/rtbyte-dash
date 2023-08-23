@@ -15,22 +15,26 @@ const appState = useAppState();
 import { useGuildSettingsStore } from '@/stores/API Data/guildSettings';
 const guildSettingsStore = useGuildSettingsStore();
 
+import { useGuildSettingsInfoLogsStore } from '@/stores/API Data/guildSettingsInfoLogs';
+const guildSettingsInfoLogsStore = useGuildSettingsInfoLogsStore();
+
 function clearSelectedGuild() {
 	appState.clearSelectedGuild();
 	guildSettingsStore.$reset();
+	guildSettingsInfoLogsStore.$reset();
 }
 
 </script>
 
 <template>
-	<VHover open-delay="500">
+	<VHover open-delay="100">
 		<template v-slot:default="{ isHovering, props }">
 			<div v-bind="props">
 				<VAvatar color="error">
 					<VIcon icon="mdi-cancel" size="90%" @click="clearSelectedGuild()" />
 					<VImg :src="guildIcon" v-if="!isHovering" transition="fade-transition" />
 				</VAvatar>
-				<VTooltip activator="parent" open-delay="500">
+				<VTooltip activator="parent" open-delay="100">
 					Deselect Server
 				</VTooltip>
 			</div>
