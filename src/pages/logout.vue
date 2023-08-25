@@ -1,12 +1,11 @@
 <script setup lang="ts">
+import { useResetStore } from '@/lib/util/resetStore';
+const resetStore = useResetStore();
 import { useLoginDataStore } from '@/stores/loginData';
 const loginData = useLoginDataStore();
 
 import { useRouter } from 'vue-router';
 const router = useRouter();
-
-import { useUserSettingsStore } from '@/stores/API Data/userSettings';
-const userSettingsStore = useUserSettingsStore();
 
 import { useTheme } from 'vuetify'
 import darkThemeLogo from '@images/wordmark-dark.svg?raw'
@@ -20,8 +19,7 @@ const logo = computed(() => {
 
 onMounted(async () => {
 	await loginData.logOut();
-	loginData.$reset();
-	userSettingsStore.$reset();
+	resetStore.all();
 	router.push({ name: 'login' });
 });
 </script>
