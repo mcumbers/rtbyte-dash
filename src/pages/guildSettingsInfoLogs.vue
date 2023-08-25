@@ -33,6 +33,9 @@ appState.$subscribe(() => {
 </script>
 
 <template>
+	<VCardTitle>
+		PLACEHOLDER
+	</VCardTitle>
 	<VCard v-for="value, setting in guildSettingsInfoLogsLocal">
 		<VCardTitle>
 			{{ setting }}

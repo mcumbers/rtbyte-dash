@@ -45,7 +45,7 @@ appState.$subscribe(() => {
 <template>
 	<VRow>
 		<VCol cols="12">
-			<VCard title="Guild Settings">
+			<VCard title="Server Settings">
 				<VCardText class="d-flex flex-row mb-6">
 					<!-- 👉 Avatar -->
 					<VAvatar color="background" size="x-large">
@@ -87,7 +87,7 @@ appState.$subscribe(() => {
 							<VRow match-height>
 								<VCol cols="12" md="6">
 									<VCardTitle>
-										Share Guild Info
+										Share Server Info
 									</VCardTitle>
 									<VCardText>
 										Choose to share detailed information about your Server with the Developers of
@@ -97,12 +97,12 @@ appState.$subscribe(() => {
 								</VCol>
 								<VCol cols="12" md="6" class="pl-8 pt-6">
 									<div>
-										<VSwitch label="Share Guild Info" inset :model-value="true" disabled />
+										<VSwitch label="Share Server Info" inset :model-value="true" disabled />
 										<VTooltip activator="parent" location="start">
 											Basic information sharing can't be disabled
 										</VTooltip>
 									</div>
-									<VSwitch label="Share Detailed Guild Info" inset
+									<VSwitch label="Share Detailed Server Info" inset
 										v-model="guildSettingsLocal.shareGuildInfoDetailed" />
 								</VCol>
 							</VRow>
@@ -185,17 +185,15 @@ appState.$subscribe(() => {
 		</VCol>
 	</VRow>
 
-	<!-- Placeholder Elements to view settings vars -->
-	<VRow>
-		<VCol>
-			<VCard v-for="value, setting in guildSettingsLocal">
-				<VCardTitle>
-					{{ setting }}
-				</VCardTitle>
-				<VCardText>
-					{{ value }}
-				</VCardText>
-			</VCard>
-		</VCol>
-	</VRow>
+	<VCardTitle>
+		PLACEHOLDER
+	</VCardTitle>
+	<VCard v-for="value, setting in guildSettingsLocal">
+		<VCardTitle>
+			{{ setting }}
+		</VCardTitle>
+		<VCardText>
+			{{ value }}
+		</VCardText>
+	</VCard>
 </template>
