@@ -18,8 +18,11 @@ const logo = computed(() => {
 })
 
 onMounted(async () => {
+	// Invalidate auth token
 	await loginData.logOut();
+	// Reset all Stores
 	resetStore.all();
+	// Send to Login page
 	router.push({ name: 'login' });
 });
 </script>
