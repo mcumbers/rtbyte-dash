@@ -4,13 +4,14 @@ const loginData = useLoginDataStore();
 import { useUserSettingsStore } from '@/stores/API Data/userSettings';
 const userSettingsStore = useUserSettingsStore();
 
+import { ReadableLanguageTags, ReadableMeasurementSystems } from '@/lib/util/readableTypes'
 import { avatarURL } from '@/lib/util/helpers';
 
-let userSettingsLocal = ref({ ...userSettingsStore.userSettings })
+let userSettingsLocal = ref({ ...userSettingsStore.userSettings });
 let deactivateConfirm = ref(false);
 
 const resetForm = () => {
-	userSettingsLocal.value = { ...userSettingsStore.userSettings }
+	userSettingsLocal.value = { ...userSettingsStore.userSettings };
 }
 
 async function deactivateBotInteractions() {
@@ -61,14 +62,14 @@ onMounted(async () => {
 						<VRow>
 							<!-- 👉 Language -->
 							<VCol cols="12" md="6">
-								<VSelect v-model="userSettingsLocal!.chatLanguage" label="Language"
-									:items="['en-US', 'en-GB']" />
+								<VSelect v-model="userSettingsLocal.chatLanguage" label="Language"
+									:items="ReadableLanguageTags" item-title="display" item-value="value" clearable />
 							</VCol>
 
 							<!-- 👉 Measurement Units -->
 							<VCol cols="12" md="6">
-								<VSelect v-model="userSettingsLocal!.chatMeasurementUnits" label="Measurement Units"
-									:items="['imperial', 'metric']" />
+								<VSelect v-model="userSettingsLocal.chatMeasurementUnits" label="Measurement Units"
+									:items="ReadableMeasurementSystems" item-title="display" item-value="value" clearable />
 							</VCol>
 
 							<!-- 👉 Form Actions -->
