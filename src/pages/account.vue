@@ -57,27 +57,27 @@ onMounted(async () => {
 				<VDivider />
 
 				<VCardText v-if="!userSettingsStore.userSettings?.disableBot">
-					<!-- 👉 Form -->
+					<!-- Form -->
 					<VForm class="mt-6">
 						<VRow>
-							<!-- 👉 Language -->
+							<!-- Language -->
 							<VCol cols="12" md="6">
 								<VSelect v-model="userSettingsLocal.chatLanguage" label="Language"
 									:items="ReadableLanguageTags" item-title="display" item-value="value" clearable />
 							</VCol>
 
-							<!-- 👉 Measurement Units -->
+							<!-- Measurement Units -->
 							<VCol cols="12" md="6">
 								<VSelect v-model="userSettingsLocal.chatMeasurementUnits" label="Measurement Units"
 									:items="ReadableMeasurementSystems" item-title="display" item-value="value" clearable />
 							</VCol>
 
-							<!-- 👉 Form Actions -->
+							<!-- Form Actions -->
 							<VCol cols="12" class="d-flex flex-wrap gap-4">
 								<VBtn @click.prevent="updateSettings()">
 									Save changes
 								</VBtn>
-								<VBtn color="secondary" variant="tonal" type="reset" @click.prevent="resetForm">
+								<VBtn color="secondary" variant="tonal" type="reset" @click.prevent="resetForm()">
 									Reset
 								</VBtn>
 							</VCol>
@@ -92,7 +92,7 @@ onMounted(async () => {
 						You have opted out of using RTByte. You cannot use RTByte Commands or Features unless you Activate
 						them again.
 					</p>
-					<VBtn color="primary" class="mt-3 ml-4" @click="activateBotInteractions()">
+					<VBtn color="primary" class="mt-3 ml-4" @click.prevent="activateBotInteractions()">
 						Activate Bot Interactions
 					</VBtn>
 				</VCardText>
@@ -100,7 +100,7 @@ onMounted(async () => {
 		</VCol>
 
 		<VCol cols="12" v-if="!userSettingsStore.userSettings?.disableBot">
-			<!-- 👉 Opt Out -->
+			<!-- Opt Out -->
 			<VCard title="Opt Out">
 				<VCardText>
 					<p class="ma-2 pa-2">
@@ -117,7 +117,7 @@ onMounted(async () => {
 					</div>
 
 					<VBtn :disabled="!deactivateConfirm" color="error" class="mt-3 ml-4"
-						@click="deactivateBotInteractions()">
+						@click.prevent="deactivateBotInteractions()">
 						Deactivate Bot Interactions
 					</VBtn>
 				</VCardText>
