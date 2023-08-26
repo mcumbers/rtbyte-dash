@@ -14,13 +14,6 @@ const guildSettingsStore = useGuildSettingsStore();
 
 let guildSettingsLocal = ref({ ...guildSettingsStore.guildSettings });
 
-const prefixRules = computed(() => {
-	return [
-		(prefix: string) => (prefix.length <= 10) || 'Prefix must be less than 10 characters',
-		(prefix: string) => (!prefix.startsWith('/')) || 'Prefix cannot start with /',
-	];
-});
-
 const resetForm = () => {
 	guildSettingsLocal.value = { ...guildSettingsStore.guildSettings }
 }
@@ -62,13 +55,6 @@ appState.$subscribe(() => {
 					<!-- Form -->
 					<VForm class="mt-6">
 						<VRow>
-							<!-- Command Prefix -->
-							<VCol cols="12" md="6">
-								<VTextField label="Chat Command Prefix" placeholder="@RTByte"
-									v-model="guildSettingsLocal.messageCommandPrefix" validate-on="input lazy"
-									:rules="prefixRules" clearable />
-							</VCol>
-
 							<!-- Language -->
 							<VCol cols="12" md="6">
 								<VSelect v-model="guildSettingsLocal.chatLanguage" label="Language"
