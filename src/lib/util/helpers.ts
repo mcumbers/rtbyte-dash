@@ -1,5 +1,5 @@
-import { UserData, GuildData } from "@/stores/loginData";
-import { BotID, BotPermissions, BotOwners } from "./constants";
+import { UserData, GuildData } from "@/stores/api/oauth/loginData";
+import { BotID, BotPermissions, BotOwners } from "@/lib/util/constants"
 
 export function isBotOwner(userData: UserData) {
 	return BotOwners.includes(userData.id);

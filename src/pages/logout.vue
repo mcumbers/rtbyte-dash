@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useResetStore } from '@/lib/util/resetStore';
 const resetStore = useResetStore();
-import { useLoginDataStore } from '@/stores/loginData';
+import { useLoginDataStore } from '@/stores/api/oauth/loginData';
 const loginData = useLoginDataStore();
 
 import { useRouter } from 'vue-router';

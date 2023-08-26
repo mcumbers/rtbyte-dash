@@ -5,7 +5,7 @@ interface Props {
 const props = defineProps<Props>()
 
 import { botInviteString } from '@/lib/util/helpers';
-import { GuildData } from '@/stores/loginData';
+import { GuildData } from '@/stores/api/oauth/loginData';
 import { iconURL } from '@/lib/util/helpers';
 
 import { useAppState } from '@/stores/appState';

@@ -4,7 +4,7 @@ interface Props {
 }
 const props = defineProps<Props>()
 
-import { GuildData } from '@/stores/loginData';
+import { GuildData } from '@/stores/api/oauth/loginData';
 import { iconURL } from '@/lib/util/helpers';
 
 const guildIcon = computed(() => iconURL(props.guildData));
@@ -12,10 +12,10 @@ const guildIcon = computed(() => iconURL(props.guildData));
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
 
-import { useGuildSettingsStore } from '@/stores/API Data/guildSettings';
+import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
 const guildSettingsStore = useGuildSettingsStore();
 
-import { useGuildSettingsInfoLogsStore } from '@/stores/API Data/guildSettingsInfoLogs';
+import { useGuildSettingsInfoLogsStore } from '@/stores/api/bot/guildSettingsInfoLogs';
 const guildSettingsInfoLogsStore = useGuildSettingsInfoLogsStore();
 
 function clearSelectedGuild() {

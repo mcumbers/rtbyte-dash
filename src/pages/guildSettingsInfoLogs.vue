@@ -6,7 +6,7 @@ const appState = useAppState();
 // Return user to guild selection if no guild selected
 if (!appState.selectedGuild) router.push({ name: 'guilds' });
 
-import { useGuildSettingsInfoLogsStore } from '@/stores/API Data/guildSettingsInfoLogs';
+import { useGuildSettingsInfoLogsStore } from '@/stores/api/bot/guildSettingsInfoLogs';
 const guildSettingsInfoLogsStore = useGuildSettingsInfoLogsStore();
 
 let guildSettingsInfoLogsLocal = ref({ ...guildSettingsInfoLogsStore.guildSettingsInfoLogs });

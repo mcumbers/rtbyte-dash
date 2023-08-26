@@ -9,7 +9,7 @@ if (!appState.selectedGuild) router.push({ name: 'guilds' });
 import { ReadableLanguageTags, ReadableMeasurementSystems } from '@/lib/util/readableTypes';
 import { iconURL } from '@/lib/util/helpers';
 
-import { useGuildSettingsStore } from '@/stores/API Data/guildSettings';
+import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
 const guildSettingsStore = useGuildSettingsStore();
 
 let guildSettingsLocal = ref({ ...guildSettingsStore.guildSettings });

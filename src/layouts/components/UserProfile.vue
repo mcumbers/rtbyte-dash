@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UserData } from '@/stores/loginData';
+import { UserData } from '@/stores/api/oauth/loginData';
 import { isBotOwner, avatarURL } from '@/lib/util/helpers';
 interface Props {
 	userData: UserData

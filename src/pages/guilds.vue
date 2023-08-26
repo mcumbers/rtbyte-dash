@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useLoginDataStore } from '@/stores/loginData';
+import { useLoginDataStore } from '@/stores/api/oauth/loginData';
 import GuildCard from '@/components/GuildCard.vue';
 const loginData = useLoginDataStore();
 

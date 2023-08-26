@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { GuildData } from './loginData';
+import { GuildData } from './api/oauth/loginData';
 
 export const useAppState = defineStore('appState', {
 	state: () => ({

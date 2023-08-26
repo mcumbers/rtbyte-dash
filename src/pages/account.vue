@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { useLoginDataStore } from '@/stores/loginData';
+import { useLoginDataStore } from '@/stores/api/oauth/loginData';
 const loginData = useLoginDataStore();
-import { useUserSettingsStore } from '@/stores/API Data/userSettings';
+import { useUserSettingsStore } from '@/stores/api/bot/userSettings';
 const userSettingsStore = useUserSettingsStore();
 
 import { ReadableLanguageTags, ReadableMeasurementSystems } from '@/lib/util/readableTypes'

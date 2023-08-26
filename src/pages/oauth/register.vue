@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 const router = useRouter();
-import { useLoginDataStore } from '@/stores/loginData';
+import { useLoginDataStore } from '@/stores/api/oauth/loginData';
 const loginData = useLoginDataStore();
 
 
