@@ -22,7 +22,7 @@ async function updateSettings() {
 }
 
 onMounted(async () => {
-	if (!guildSettingsModActionsStore.guildSettingsModActions) await guildSettingsModActionsStore.fetch(appState.selectedGuild!.id);
+	if (!guildSettingsModActionsStore.guildSettingsModActions) await guildSettingsModActionsStore.fetch();
 	resetForm();
 });
 
@@ -33,15 +33,17 @@ appState.$subscribe(() => {
 </script>
 
 <template>
-	<VCardTitle>
-		PLACEHOLDER
-	</VCardTitle>
-	<VCard v-for="value, setting in guildSettingsModActionsLocal">
+	<VRow v-if="appState.selectedGuild">
 		<VCardTitle>
-			{{ setting }}
+			PLACEHOLDER
 		</VCardTitle>
-		<VCardText>
-			{{ value }}
-		</VCardText>
-	</VCard>
+		<VCard v-for="value, setting in guildSettingsModActionsLocal">
+			<VCardTitle>
+				{{ setting }}
+			</VCardTitle>
+			<VCardText>
+				{{ value }}
+			</VCardText>
+		</VCard>
+	</VRow>
 </template>

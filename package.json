@@ -27,6 +27,7 @@
 		"axios": "^1.4.0",
 		"axios-mock-adapter": "^1.21.5",
 		"chart.js": "^4.3.3",
+		"discord.js": "^14.13.0",
 		"jwt-decode": "^3.1.2",
 		"pinia": "^2.1.6",
 		"pinia-plugin-persistedstate": "^3.2.0",

@@ -14,6 +14,7 @@ export function iconURL(guildData: GuildData) {
 	// Using this, we can show animated guild icons if the guild has one
 	// I'm currently disabling it, though, because it DOUBLES the render time on the guild select page
 	// const fileExt: string = guildData.icon.startsWith('a_') ? 'gif' : 'png';
+	// return `https://cdn.discordapp.com/icons/${guildData.id}/${guildData.icon}.${fileExt}`;
 	return `https://cdn.discordapp.com/icons/${guildData.id}/${guildData.icon}.png`;
 }
 

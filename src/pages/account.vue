@@ -33,7 +33,7 @@ async function updateSettings() {
 }
 
 onMounted(async () => {
-	if (!userSettingsStore.userSettings) await userSettingsStore.fetch(loginData.userData!.id);
+	if (!userSettingsStore.userSettings) await userSettingsStore.fetch();
 	userSettingsLocal = ref({ ...userSettingsStore.userSettings });
 	resetForm();
 });

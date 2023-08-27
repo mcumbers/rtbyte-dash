@@ -1,4 +1,25 @@
 import { MeasurementSystem, LanguageTag, ModActionType } from "@prisma/client";
+import { ChannelType } from 'discord.js';
+
+export type ReadableGuildChannelType = {
+	value: ChannelType,
+	display: string
+}
+
+export const ReadableGuildChannelTypes: Array<ReadableGuildChannelType> = [
+	{ value: 0, display: "Text Channel" }, // GuildText
+	{ value: 1, display: "DM" }, // DM
+	{ value: 2, display: "Voice Channel" }, // GuildVoice
+	{ value: 3, display: "Group DM" }, // GroupDM
+	{ value: 4, display: "Category" }, // GuildCategory
+	{ value: 5, display: "Announcement/News Channel" }, // GuildAnnouncement & GuildNews
+	{ value: 10, display: "Announcement/News Thread" }, // AnnouncementThread & GuildNewsThread
+	{ value: 11, display: "Public Thread" }, // PublicThread & GuildPublicThread
+	{ value: 12, display: "Private Thread" }, // PrivateThread & GuildPrivateThread
+	{ value: 13, display: "Stage Channel" }, // GuildStageVoice
+	{ value: 14, display: "Directory" }, // GuildDirectory
+	{ value: 15, display: "Forum" } // GuildForum
+];
 
 export type ReadableMeasurementSystem = {
 	value: MeasurementSystem,

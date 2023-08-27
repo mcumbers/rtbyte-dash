@@ -9,6 +9,10 @@ if (!appState.selectedGuild) router.push({ name: 'guilds' });
 import { ReadableLanguageTags, ReadableMeasurementSystems } from '@/lib/util/readableTypes';
 import { iconURL } from '@/lib/util/helpers';
 
+import { useGuildChannelsStore, type APIGuildChannel } from '@/stores/api/discord/guildChannels';
+const guildChannelsStore = useGuildChannelsStore();
+
+
 import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
 const guildSettingsStore = useGuildSettingsStore();
 
@@ -25,7 +29,8 @@ async function updateSettings() {
 }
 
 onMounted(async () => {
-	if (!guildSettingsStore.guildSettings) await guildSettingsStore.fetch(appState.selectedGuild!.id);
+	if (!guildSettingsStore.guildSettings) await guildSettingsStore.fetch();
+	if (!guildChannelsStore.guildChannels.length) await guildChannelsStore.fetchAll();
 	resetForm();
 });
 
@@ -36,7 +41,7 @@ appState.$subscribe(() => {
 </script>
 
 <template>
-	<VRow>
+	<VRow v-if="appState.selectedGuild">
 		<VCol cols="12">
 			<VCard title="Server Settings">
 				<VCardText class="d-flex flex-row mb-6">
@@ -174,12 +179,13 @@ appState.$subscribe(() => {
 	<VCardTitle>
 		PLACEHOLDER
 	</VCardTitle>
-	<VCard v-for="value, setting in guildSettingsLocal">
-		<VCardTitle>
-			{{ setting }}
-		</VCardTitle>
+	<VCard>
+		<VSelect chips>
+		</VSelect>
+	</VCard>
+	<VCard v-for="channel in guildChannelsStore.guildChannels">
 		<VCardText>
-			{{ value }}
+			{{ JSON.stringify(channel) }}
 		</VCardText>
 	</VCard>
 </template>

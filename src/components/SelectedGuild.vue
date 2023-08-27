@@ -12,16 +12,8 @@ const guildIcon = computed(() => iconURL(props.guildData));
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
 
-import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
-const guildSettingsStore = useGuildSettingsStore();
-
-import { useGuildSettingsInfoLogsStore } from '@/stores/api/bot/guildSettingsInfoLogs';
-const guildSettingsInfoLogsStore = useGuildSettingsInfoLogsStore();
-
 function clearSelectedGuild() {
 	appState.clearSelectedGuild();
-	guildSettingsStore.$reset();
-	guildSettingsInfoLogsStore.$reset();
 }
 
 </script>
