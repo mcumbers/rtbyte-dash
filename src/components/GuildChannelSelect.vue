@@ -1,0 +1,47 @@
+<script lang="ts" setup>
+const props = defineProps<{
+	modelValue: string | string[] | null,
+	multiple?: boolean,
+	clearable?: boolean,
+	label?: string,
+	hint?: string
+}>();
+defineEmits(['update:modelValue'])
+
+import { useGuildChannelsStore } from '@/stores/api/discord/guildChannels';
+const guildChannelsStore = useGuildChannelsStore();
+
+const selectChannels = computed(() => {
+	let selectChannels: { title: string, value: string, props: Record<string, any> | null }[] = [];
+	const guildChannels = ref(guildChannelsStore.guildChannels);
+	guildChannels.value.forEach((guildChannel) => {
+		let namePrefix: string = '';
+		let props: Record<string, any> | null = null;
+		switch (guildChannel.type) {
+			case 0: namePrefix = '#'; break;	// Text Channel
+			case 2: namePrefix = '🔈'; break;	// Voice Channel
+			case 4: namePrefix = '▼'; props = { disabled: true }; break;	// Category
+			case 5: namePrefix = '📣'; break;	// Announcement Channel
+			case 13: namePrefix = '🛜'; break;	// Stage Channel
+			case 15: namePrefix = '💬'; break; 	// Forum
+		}
+
+		if (guildChannel.parent) namePrefix = '⠀⠀⠀' + namePrefix; // Add a bit of blank space before child channel names
+
+		selectChannels.push({
+			title: `${namePrefix}${guildChannel.name}`,
+			value: guildChannel.id,
+			props
+		});
+	});
+	return selectChannels;
+});
+
+
+</script>
+
+<template>
+	<VSelect v-bind:model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)" chips
+		:items="selectChannels" item-props="props" :multiple="multiple" :clearable="clearable"
+		:label="label ?? `Channel${multiple ? 's' : ''}`" :hint="hint" />
+</template>
