@@ -41,7 +41,7 @@ const selectChannels = computed(() => {
 </script>
 
 <template>
-	<VSelect v-bind:model-value="modelValue" @update:model-value="$emit('update:modelValue', $event)" chips
-		:items="selectChannels" item-props="props" :multiple="multiple" :clearable="clearable"
-		:label="label ?? `Channel${multiple ? 's' : ''}`" :hint="hint" />
+	<VSelect v-bind:model-value="multiple ? (modelValue as string[]) : (modelValue as string)"
+		@update:model-value="$emit('update:modelValue', $event)" chips :items="selectChannels" item-props="props"
+		:multiple="multiple" :clearable="clearable" :label="label ?? `Channel${multiple ? 's' : ''}`" :hint="hint" />
 </template>
