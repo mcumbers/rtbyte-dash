@@ -161,7 +161,61 @@ appState.$subscribe(() => {
 								</VCol>
 							</VRow>
 
-							<GuildChannelSelect v-model="(guildSettingsLocal.greetingWelcomeChannel as string)" clearable />
+							<VDivider class="ma-6 mb-8" />
+
+							<VRow>
+								<VCol cols="12">
+									<VRow match-height>
+										<VCol cols="6">
+											<VCardTitle>
+												Server Welcome Messages
+											</VCardTitle>
+										</VCol>
+										<VCol cols="6" class="pl-8 pt-6">
+											<VSwitch label="Send a Welcome Message to Users joining the Server" inset
+												v-model="guildSettingsLocal.greetingWelcomeEnabled" />
+										</VCol>
+									</VRow>
+									<VRow match-height v-if="guildSettingsLocal.greetingWelcomeEnabled">
+										<VCol cols="6" class="pl-8 pr-6">
+											<VTextField label="Welcome Message"
+												v-model="guildSettingsLocal.greetingWelcomeMessage" />
+										</VCol>
+										<VCol cols="6" class="pl-8 pr-6">
+											<GuildChannelSelect label="Welcome Message Channel"
+												v-model="(guildSettingsLocal.greetingWelcomeChannel as string)" clearable />
+										</VCol>
+									</VRow>
+								</VCol>
+							</VRow>
+
+							<VRow>
+								<VCol cols="12">
+									<VRow match-height>
+										<VCol cols="6">
+											<VCardTitle>
+												Server Goodbye Messages
+											</VCardTitle>
+										</VCol>
+										<VCol cols="6" class="pl-8 pt-6">
+											<VSwitch label="Say Goodbye to Users Leaving the Server" inset
+												v-model="guildSettingsLocal.greetingGoodbyeEnabled" />
+										</VCol>
+									</VRow>
+									<VRow match-height v-if="guildSettingsLocal.greetingGoodbyeEnabled">
+										<VCol cols="6" class="pl-8 pr-6">
+											<VTextField label="Goodbye Message"
+												v-model="guildSettingsLocal.greetingGoodbyeMessage" />
+										</VCol>
+										<VCol cols="6" class="pl-8 pr-6">
+											<GuildChannelSelect label="Goodbye Message Channel"
+												v-model="(guildSettingsLocal.greetingGoodbyeChannel as string)" clearable />
+										</VCol>
+									</VRow>
+								</VCol>
+							</VRow>
+
+							<VDivider class="ma-6 mb-8" />
 
 							<!-- Form Actions -->
 							<VCol cols="12" class="d-flex flex-wrap gap-4">
