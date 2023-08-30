@@ -8,13 +8,15 @@ const props = defineProps<{
 }>();
 defineEmits(['update:modelValue'])
 
+import { clientStyleChannelSort } from '@/lib/util/helpers';
 import { useGuildChannelsStore } from '@/stores/api/discord/guildChannels';
 const guildChannelsStore = useGuildChannelsStore();
 
 const selectChannels = computed(() => {
 	let selectChannels: { title: string, value: string, props: Record<string, any> | null }[] = [];
 	const guildChannels = ref(guildChannelsStore.guildChannels);
-	guildChannels.value.forEach((guildChannel) => {
+	const sortedChannels = clientStyleChannelSort(guildChannels.value);
+	sortedChannels.forEach((guildChannel) => {
 		let namePrefix: string = '';
 		let props: Record<string, any> | null = null;
 		switch (guildChannel.type) {

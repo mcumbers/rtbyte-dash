@@ -12,6 +12,7 @@ import { iconURL } from '@/lib/util/helpers';
 import { useGuildChannelsStore, type APIGuildChannel } from '@/stores/api/discord/guildChannels';
 const guildChannelsStore = useGuildChannelsStore();
 
+import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
 
 import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
 const guildSettingsStore = useGuildSettingsStore();
@@ -160,6 +161,8 @@ appState.$subscribe(() => {
 								</VCol>
 							</VRow>
 
+							<GuildChannelSelect v-model="(guildSettingsLocal.greetingWelcomeChannel as string)" clearable />
+
 							<!-- Form Actions -->
 							<VCol cols="12" class="d-flex flex-wrap gap-4">
 								<VBtn @click.prevent="updateSettings()">
@@ -179,13 +182,10 @@ appState.$subscribe(() => {
 	<VCardTitle>
 		PLACEHOLDER
 	</VCardTitle>
+
 	<VCard>
-		<VSelect chips>
-		</VSelect>
-	</VCard>
-	<VCard v-for="channel in guildChannelsStore.guildChannels">
 		<VCardText>
-			{{ JSON.stringify(channel) }}
+			{{ guildSettingsLocal.greetingWelcomeChannel }}
 		</VCardText>
 	</VCard>
 </template>

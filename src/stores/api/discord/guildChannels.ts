@@ -14,7 +14,7 @@ export interface APIGuildChannel {
 	nsfw?: boolean,
 	parent?: string,
 	position: number,
-	createdTimestamp: Date
+	createdTimestamp: number
 }
 
 export const useGuildChannelsStore = defineStore('guildChannels', {
