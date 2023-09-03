@@ -6,7 +6,7 @@
 	"description": "The Web Dashboard for the RTByte multipurpose Discord Bot",
 	"private": true,
 	"scripts": {
-		"postinstall": "npm run build-icons && npm run build-prisma",
+		"postinstall": "npm run build:icons && npm run build:prisma",
 		"dev": "vite",
 		"build": "vite build",
 		"build:icons": "tsc -b src/@iconify && node src/@iconify/build-icons.js",
