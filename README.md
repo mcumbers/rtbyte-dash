@@ -1,25 +1,31 @@
-# vue
+<div align="center">
 
-This template should help get you started developing with Vue 3 in Vite.
+![RTByte logo](https://rtbyte.xyz/android-chrome-192x192.png)
 
-## Recommended IDE Setup
+# RTByte Dashboard
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) (and disable Vetur).
+</div>
 
-## Type Support for `.vue` Imports in TS
+## Description
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates.
+This is the in-development Web Dashboard for the RTByte Discord Bot. It is currently considered to be in early alpha, so everything is subject to change. There will likely be a lot of placeholder assets, poor performance, and poorly--or completely unimplemented--features until such a time comes that we transition to a beta state.
 
-However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can run `Volar: Switch TS Plugin on/off` from VSCode command palette.
+### Details
 
-## Customize configuration
+This Dashboard is based on the [Materio Admin Template](https://github.com/themeselection/materio-vuetify-vuejs-admin-template-free) by [ThemeSelection](https://themeselection.com/). It uses the [Vuetify](https://vuetifyjs.com/en/) Component Framework on top of [Vue.js 3](https://vuejs.org/). The Dashboard communicates with RTByte using [@sapphire/plugin-api](https://github.com/sapphiredev/plugins/tree/main/packages/api).
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+### A note regarding self-hosting RTByte
 
-## Project Setup
+While RTByte is, and always will be, open-source, we're not very supportive of the idea of others self-hosting the bot. While you're completely free to host RTByte yourself, _you will not receive any support from us_ in doing so.
+
+Like many other open-source Discord bots, RTByte hasn't been built with the idea of self-hosting in mind. We use many different services to ensure we're able to deliver the best solution available.
+
+You can add RTByte to your server by visiting [rtbyte.xyz/invite].
+
+## Development Setup
 
 ```sh
-npm install
+npm install --save-dev
 ```
 
 ### Compile and Hot-Reload for Development
