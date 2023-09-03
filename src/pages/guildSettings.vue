@@ -9,9 +9,6 @@ if (!appState.selectedGuild) router.push({ name: 'guilds' });
 import { ReadableLanguageTags, ReadableMeasurementSystems } from '@/lib/util/readableTypes';
 import { iconURL } from '@/lib/util/helpers';
 
-import { useGuildChannelsStore, type APIGuildChannel } from '@/stores/api/discord/guildChannels';
-const guildChannelsStore = useGuildChannelsStore();
-
 import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
 
 import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
@@ -31,7 +28,6 @@ async function updateSettings() {
 
 onMounted(async () => {
 	if (!guildSettingsStore.guildSettings) await guildSettingsStore.fetch();
-	if (!guildChannelsStore.guildChannels.length) await guildChannelsStore.fetchAll();
 	resetForm();
 });
 
@@ -51,7 +47,7 @@ appState.$subscribe(() => {
 						<VImg :src="iconURL(appState.selectedGuild!)" />
 					</VAvatar>
 					<h3 class="ma-2 pa-2 pt-3">
-						{{ appState.selectedGuild?.name }}
+						{{ appState.selectedGuild.name }}
 					</h3>
 				</VCardText>
 
@@ -232,14 +228,4 @@ appState.$subscribe(() => {
 			</VCard>
 		</VCol>
 	</VRow>
-
-	<VCardTitle>
-		PLACEHOLDER
-	</VCardTitle>
-
-	<VCard>
-		<VCardText>
-			{{ guildSettingsLocal.greetingWelcomeChannel }}
-		</VCardText>
-	</VCard>
 </template>

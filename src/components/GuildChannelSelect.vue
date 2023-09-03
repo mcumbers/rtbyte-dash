@@ -39,6 +39,9 @@ const selectChannels = computed(() => {
 	return selectChannels;
 });
 
+onMounted(async () => {
+	if (!guildChannelsStore.guildChannels.length) await guildChannelsStore.fetchAll();
+});
 
 </script>
 
