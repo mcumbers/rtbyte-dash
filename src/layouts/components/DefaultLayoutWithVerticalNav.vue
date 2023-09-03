@@ -3,7 +3,7 @@ import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 
-import { useLoginDataStore } from '@/stores/api/oauth/loginData';
+import { useLoginDataStore, type UserData } from '@/stores/api/oauth/loginData';
 const loginData = useLoginDataStore();
 
 import { useUserSettingsStore } from '@/stores/api/bot/userSettings';
@@ -21,6 +21,7 @@ import Footer from '@/layouts/components/Footer.vue';
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue';
 import UserProfile from '@/layouts/components/UserProfile.vue';
 import SelectedGuild from '@/components/SelectedGuild.vue';
+import { isBotOwner } from '@/lib/util/helpers';
 
 const botDisabled = computed(() => {
 	return userSettingsStore.userSettings?.disableBot;
@@ -116,7 +117,23 @@ watch(route, () => {
 		</template>
 
 		<!-- 👉 Pages -->
-		<slot />
+		<slot v-if="isBotOwner(loginData.userData as UserData)" />
+		<VRow v-if="!isBotOwner(loginData.userData as UserData)">
+			<VCard>
+				<VCardTitle class="ma-4">
+					RTByte Dashboard Disabled
+				</VCardTitle>
+				<VCardText class="ma-4">
+					<p>Thanks for your interest in RTByte!</p>
+					<p>Unfortunately, the dashboard is currently in closed alpha, and you don't have access to use it.</p>
+					<p>If you'd like updates on when you can use the RTByte Dashboard, please join our Discord!</p>
+				</VCardText>
+				<VBtn href="https://rtbyte.xyz/discord" target="_blank" class="mb-10"
+					style="left: 50%; transform: translateX(-50%)">
+					RTByte Discord
+				</VBtn>
+			</VCard>
+		</VRow>
 
 		<!-- 👉 Footer -->
 		<template #footer>
