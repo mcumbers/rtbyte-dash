@@ -53,7 +53,7 @@ watch(route, () => {
 					<VIcon icon="mdi-menu" />
 				</IconBtn>
 
-				<SelectedGuild v-if="appState.selectedGuild" v-bind="{ guildData: appState.selectedGuild }" />
+				<SelectedGuild v-if="appState.selectedGuild" :guildData="appState.selectedGuild" />
 
 				<VSpacer />
 
@@ -73,7 +73,7 @@ watch(route, () => {
 
 				<NavbarThemeSwitcher class="me-2" />
 
-				<UserProfile v-if="loginData.userData" v-bind="{ userData: loginData.userData }" />
+				<UserProfile v-if="loginData.userData" :userData="loginData.userData" />
 			</div>
 		</template>
 
