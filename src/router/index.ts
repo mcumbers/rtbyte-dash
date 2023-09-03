@@ -32,15 +32,7 @@ const router = createRouter({
 					path: 'settings/mod-actions',
 					name: 'settings-mod-actions',
 					component: () => import('../pages/guildSettingsModActions.vue'),
-				},
-				{
-					path: 'tables',
-					component: () => import('../pages/tables.vue'),
-				},
-				{
-					path: 'form-layouts',
-					component: () => import('../pages/form-layouts.vue'),
-				},
+				}
 			],
 		},
 		{
