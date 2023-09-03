@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const props = defineProps<{
-	modelValue: string | string[] | null,
+	modelValue: string | string[] | null | undefined,
 	multiple?: boolean,
 	clearable?: boolean,
 	label?: string,
