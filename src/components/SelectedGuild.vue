@@ -23,7 +23,7 @@ function clearSelectedGuild() {
 		<template v-slot:default="{ isHovering, props }">
 			<div v-bind="props">
 				<VAvatar color="error">
-					<VIcon icon="mdi-cancel" size="75%" @click="clearSelectedGuild()" />
+					<VIcon icon="mdi-cancel" v-if="isHovering" size="75%" @click="clearSelectedGuild()" />
 					<VImg :src="guildIcon" v-if="!isHovering" transition="fade-transition" />
 				</VAvatar>
 				<VTooltip activator="parent" open-delay="100">
