@@ -1,12 +1,16 @@
 <script lang="ts" setup>
-const props = defineProps<{
+interface Props {
 	modelValue: string | string[] | null | undefined,
 	multiple?: boolean,
 	clearable?: boolean,
 	label?: string,
-	hint?: string
-}>();
-defineEmits(['update:modelValue'])
+	hint?: string,
+	selectCategories?: boolean
+};
+const props = defineProps<Props>();
+defineEmits(['update:modelValue']);
+
+const selectCategories = props.selectCategories ?? false;
 
 import { clientStyleChannelSort } from '@/lib/util/helpers';
 import { useGuildChannelsStore } from '@/stores/api/discord/guildChannels';
@@ -22,7 +26,7 @@ const selectChannels = computed(() => {
 		switch (guildChannel.type) {
 			case 0: namePrefix = '#'; break;	// Text Channel
 			case 2: namePrefix = '🔈'; break;	// Voice Channel
-			case 4: namePrefix = '▼'; props = { disabled: true }; break;	// Category
+			case 4: namePrefix = '▼'; props = { disabled: !selectCategories }; break;	// Category
 			case 5: namePrefix = '📣'; break;	// Announcement Channel
 			case 13: namePrefix = '🛜'; break;	// Stage Channel
 			case 15: namePrefix = '💬'; break; 	// Forum
