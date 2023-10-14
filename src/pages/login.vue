@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
+import { useTheme } from 'vuetify';
 
-import darkThemeLogo from '@images/wordmark-dark.svg?raw'
-import lightThemeLogo from '@images/wordmark-light.svg?raw'
-const vuetifyTheme = useTheme()
+import darkThemeLogo from '@images/wordmark-dark.svg?raw';
+import lightThemeLogo from '@images/wordmark-light.svg?raw';
+const vuetifyTheme = useTheme();
 const logo = computed(() => {
 	return vuetifyTheme.global.name.value === 'light'
 		? lightThemeLogo
 		: darkThemeLogo
-})
+});
 
 const DiscordOauthURL = `https://discord.com/oauth2/authorize`;
 

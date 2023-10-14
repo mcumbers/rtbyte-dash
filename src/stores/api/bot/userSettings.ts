@@ -15,12 +15,12 @@ export const useUserSettingsStore = defineStore('userSettings', {
 			let userID = this.userSettings?.id;
 			if (!userID) userID = useLoginDataStore().userData?.id;
 			const response = await botAPI.get(`/users/${userID}/settings`);
-			this.$patch({ userSettings: response.data.data.userSettings });
+			this.$patch({ userSettings: response.data.data.userSettings as UserSettings });
 			return this;
 		},
 		async update() {
 			const response = await botAPI.post(`/users/${this.userSettings?.id}/settings`, { data: { userSettings: this.userSettings } });
-			this.$patch({ userSettings: response.data.data.userSettings });
+			this.$patch({ userSettings: response.data.data.userSettings as UserSettings });
 			return this;
 		}
 	},

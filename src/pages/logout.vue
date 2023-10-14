@@ -7,15 +7,15 @@ const resetStore = useResetStore();
 import { useRouter } from 'vue-router';
 const router = useRouter();
 
-import { useTheme } from 'vuetify'
-import darkThemeLogo from '@images/wordmark-dark.svg?raw'
-import lightThemeLogo from '@images/wordmark-light.svg?raw'
-const vuetifyTheme = useTheme()
+import { useTheme } from 'vuetify';
+import darkThemeLogo from '@images/wordmark-dark.svg?raw';
+import lightThemeLogo from '@images/wordmark-light.svg?raw';
+const vuetifyTheme = useTheme();
 const logo = computed(() => {
 	return vuetifyTheme.global.name.value === 'light'
 		? lightThemeLogo
 		: darkThemeLogo
-})
+});
 
 onMounted(async () => {
 	// Invalidate auth token

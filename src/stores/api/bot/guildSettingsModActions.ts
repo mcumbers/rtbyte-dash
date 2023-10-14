@@ -18,13 +18,13 @@ export const useGuildSettingsModActionsStore = defineStore('guildSettingsModActi
 		async fetch() {
 			if (!this.guildID) return;
 			const response = await botAPI.get(`/guilds/${this.guildID}/settings/mod-actions`);
-			this.$patch({ guildSettingsModActions: response.data.data.guildSettingsModActions });
+			this.$patch({ guildSettingsModActions: response.data.data.guildSettingsModActions as GuildSettingsModActions });
 			return this;
 		},
 		async update() {
 			if (!this.guildID) return;
 			const response = await botAPI.post(`/guilds/${this.guildID}/settings/mod-actions`, { data: { guildSettingsModActions: this.guildSettingsModActions } });
-			this.$patch({ guildSettingsModActions: response.data.data.guildSettingsModActions });
+			this.$patch({ guildSettingsModActions: response.data.data.guildSettingsModActions as GuildSettingsModActions });
 			return this;
 		}
 	},

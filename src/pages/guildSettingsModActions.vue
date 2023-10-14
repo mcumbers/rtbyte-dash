@@ -12,14 +12,14 @@ const guildSettingsModActionsStore = useGuildSettingsModActionsStore();
 let guildSettingsModActionsLocal = ref({ ...guildSettingsModActionsStore.guildSettingsModActions });
 
 const resetForm = () => {
-	guildSettingsModActionsLocal.value = { ...guildSettingsModActionsStore.guildSettingsModActions }
-}
+	guildSettingsModActionsLocal.value = { ...guildSettingsModActionsStore.guildSettingsModActions };
+};
 
 async function updateSettings() {
 	guildSettingsModActionsStore.$patch({ guildSettingsModActions: guildSettingsModActionsLocal.value });
 	await guildSettingsModActionsStore.update();
 	return resetForm();
-}
+};
 
 onMounted(async () => {
 	if (!guildSettingsModActionsStore.guildSettingsModActions) await guildSettingsModActionsStore.fetch();

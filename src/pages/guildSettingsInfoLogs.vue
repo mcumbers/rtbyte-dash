@@ -15,14 +15,14 @@ let guildSettingsInfoLogsLocal = ref({ ...guildSettingsInfoLogsStore.guildSettin
 import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
 
 const resetForm = () => {
-	guildSettingsInfoLogsLocal.value = { ...guildSettingsInfoLogsStore.guildSettingsInfoLogs }
-}
+	guildSettingsInfoLogsLocal.value = { ...guildSettingsInfoLogsStore.guildSettingsInfoLogs };
+};
 
 async function updateSettings() {
 	guildSettingsInfoLogsStore.$patch({ guildSettingsInfoLogs: guildSettingsInfoLogsLocal.value });
 	await guildSettingsInfoLogsStore.update();
 	return resetForm();
-}
+};
 
 onMounted(async () => {
 	if (!guildSettingsInfoLogsStore.guildSettingsInfoLogs) await guildSettingsInfoLogsStore.fetch();

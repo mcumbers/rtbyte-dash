@@ -49,7 +49,7 @@ onMounted(async () => {
 						<VImg :src="avatarURL(loginData.userData!)" />
 					</VAvatar>
 					<h3 class="ma-2 pa-2 pt-3">
-						{{ loginData.userData?.username }}{{ parseInt(loginData.userData?.discriminator ?? '') > 0 ?
+						{{ loginData.userData?.username }}{{ parseInt(`${loginData.userData?.discriminator}` ?? '') > 0 ?
 							`#${loginData.userData?.discriminator}` : '' }}
 					</h3>
 				</VCardText>
