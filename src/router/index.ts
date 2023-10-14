@@ -32,6 +32,16 @@ const router = createRouter({
 					path: 'settings/mod-actions',
 					name: 'settings-mod-actions',
 					component: () => import('../pages/guildSettingsModActions.vue'),
+				},
+				{
+					path: 'settings/bot-global',
+					name: 'settings-bot-global',
+					component: () => import('../pages/botSettings.vue'),
+				},
+				{
+					path: 'debug/guild-data-viewer',
+					name: 'debug-guild-data-viewer',
+					component: () => import('../pages/guildDataViewer.vue'),
 				}
 			],
 		},
