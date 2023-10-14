@@ -4,6 +4,4 @@ export const BotID: string = '';
 // This currently requests Administrator perms at all times
 export const BotPermissions: string = '8';
 
-export const BotOwners: string[] = [];
-
 export const BotAPIHost: string = '';
