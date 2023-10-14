@@ -2,7 +2,7 @@
 interface Props {
 	guildData: GuildData
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 import { GuildData } from '@/stores/api/oauth/loginData';
 import { iconURL } from '@/lib/util/helpers';

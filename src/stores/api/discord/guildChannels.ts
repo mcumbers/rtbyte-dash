@@ -11,8 +11,8 @@ export interface APIGuildChannel {
 	guild: string,
 	name: string,
 	type: ChannelType,
-	nsfw?: boolean,
-	parent?: string,
+	nsfw: boolean | null,
+	parent: string | null,
 	position: number,
 	createdTimestamp: number
 }
@@ -22,8 +22,8 @@ export const useGuildChannelsStore = defineStore('guildChannels', {
 		guildChannels: [] as APIGuildChannel[]
 	}),
 	getters: {
-		guildID() {
-			return useAppState().selectedGuild?.id;
+		guildID(state) {
+			return state.guildChannels[0]?.guild || useAppState().selectedGuild?.id || null;
 		}
 	},
 	actions: {
@@ -41,8 +41,8 @@ export const useGuildChannelsStore = defineStore('guildChannels', {
 					guild: resChannel.guild,
 					name: resChannel.name,
 					type: resChannel.type,
-					nsfw: resChannel?.nsfw,
-					parent: resChannel?.parentId,
+					nsfw: resChannel.nsfw || null,
+					parent: resChannel.parentId || null,
 					position: resChannel.rawPosition,
 					createdTimestamp: resChannel.createdTimestamp
 				} as APIGuildChannel);
