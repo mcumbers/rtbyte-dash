@@ -128,7 +128,7 @@ watch(route, () => {
 						Select a Server to access this
 					</VTooltip>
 					<VerticalNavLink :item="{
-						title: 'Server Data Previewer',
+						title: 'Guild Data Viewer',
 						icon: 'ic-baseline-discord',
 						to: '/debug/guild-data-viewer'
 					}" :class="appState.selectedGuild ? undefined : 'disabled'" />

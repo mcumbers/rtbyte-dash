@@ -54,7 +54,7 @@ appState.$subscribe(() => {
 <template>
 	<VRow v-if="appState.selectedGuild">
 		<VCol cols="12">
-			<VCard title="Server Data Previewer">
+			<VCard title="Guild Data Viewer">
 				<VCardText class="d-flex flex-row mb-6">
 					<!-- 👉 Avatar -->
 					<VAvatar color="background" size="x-large">
