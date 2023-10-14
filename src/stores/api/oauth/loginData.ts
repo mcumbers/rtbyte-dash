@@ -8,7 +8,7 @@ export interface UserData {
 	username: string,
 	avatar: string,
 	avatarURL?: string,
-	discriminator: string,
+	discriminator: number | null,
 	public_flags: number,
 	flags: number,
 	banner: string,
@@ -18,7 +18,8 @@ export interface UserData {
 	banner_color: string,
 	mfa_enabled: boolean,
 	locale: string,
-	premium_type: number
+	premium_type: number,
+	isBotOwner: boolean
 }
 
 export interface GuildData {
@@ -32,8 +33,27 @@ export interface GuildData {
 	canManageServer: boolean
 }
 
+export interface BotData {
+	id: string,
+	bot: boolean,
+	system: boolean,
+	flags: number,
+	username: string,
+	globalName: string | null,
+	discriminator: number | null,
+	avatar: string | null,
+	avatarDecoration: null,
+	verified: boolean,
+	mfaEnabled: boolean,
+	createdTimestamp: number,
+	defaultAvatarURL: string,
+	tag: string,
+	avatarURL: string | null,
+	displayAvatarURL: string | null
+}
+
 export const useLoginDataStore = defineStore('loginData', {
-	state: () => ({ userData: null as UserData | null, userGuilds: [] as GuildData[], lastRefresh: 0 as Number }),
+	state: () => ({ userData: null as UserData | null, userGuilds: [] as GuildData[], botData: null as BotData | null, lastRefresh: 0 as Number }),
 	getters: {},
 	actions: {
 		async login(oAuthCode: string) {
@@ -42,7 +62,7 @@ export const useLoginDataStore = defineStore('loginData', {
 				const response = await botAPI.post('/oauth/callback', { code: oAuthCode });
 
 				// Grab the login data from the response, and put it in our app's store
-				this.$patch({ userData: response.data.user, userGuilds: response.data.guilds, lastRefresh: Date.now() });
+				this.$patch({ userData: response.data.user, userGuilds: response.data.guilds, botData: response.data.bot, lastRefresh: Date.now() });
 
 				return this;
 			} catch (error) {
@@ -63,7 +83,7 @@ export const useLoginDataStore = defineStore('loginData', {
 				const response = await botAPI.post('/oauth/refresh');
 
 				// Grab the login data from the response, and put it in our app's store
-				this.$patch({ userData: response.data.user, userGuilds: response.data.guilds, lastRefresh: Date.now() });
+				this.$patch({ userData: response.data.user, userGuilds: response.data.guilds, botData: response.data.bot, lastRefresh: Date.now() });
 			} catch (error) {
 				console.log(error);
 			}
