@@ -1,10 +1,6 @@
 import { UserData, GuildData } from "@/stores/api/oauth/loginData";
-import { BotID, BotPermissions, BotOwners } from "@/lib/util/constants";
+import { BotID, BotPermissions } from "@/lib/util/constants";
 import { APIGuildChannel } from "@/stores/api/discord/guildChannels";
-
-export function isBotOwner(userData: UserData) {
-	return BotOwners.includes(userData.id);
-}
 
 export function avatarURL(userData: UserData) {
 	const fileExt: string = userData.avatar.startsWith('a_') ? 'gif' : 'png';

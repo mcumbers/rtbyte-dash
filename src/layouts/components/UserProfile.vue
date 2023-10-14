@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { type UserData } from '@/stores/api/oauth/loginData';
-import { isBotOwner, avatarURL } from '@/lib/util/helpers';
+import { avatarURL } from '@/lib/util/helpers';
 interface Props {
 	userData: UserData
 }
@@ -25,7 +25,7 @@ const props = defineProps<Props>()
 					</template>
 
 					<VListItemTitle class="font-weight-semibold">{{ props.userData.username }}</VListItemTitle>
-					<VListItemSubtitle v-if="isBotOwner(props.userData)">Developer</VListItemSubtitle>
+					<VListItemSubtitle v-if="props.userData.isBotOwner">Developer</VListItemSubtitle>
 				</VListItem>
 				<VDivider class="my-2" />
 

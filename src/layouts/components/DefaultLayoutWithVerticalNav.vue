@@ -3,7 +3,7 @@ import { useRouter, useRoute } from 'vue-router';
 const router = useRouter();
 const route = useRoute();
 
-import { useLoginDataStore, type UserData } from '@/stores/api/oauth/loginData';
+import { useLoginDataStore } from '@/stores/api/oauth/loginData';
 const loginData = useLoginDataStore();
 
 import { useUserSettingsStore } from '@/stores/api/bot/userSettings';
@@ -21,7 +21,6 @@ import Footer from '@/layouts/components/Footer.vue';
 import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue';
 import UserProfile from '@/layouts/components/UserProfile.vue';
 import SelectedGuild from '@/components/SelectedGuild.vue';
-import { isBotOwner } from '@/lib/util/helpers';
 
 const botDisabled = computed(() => {
 	return userSettingsStore.userSettings?.disableBot;
@@ -114,11 +113,32 @@ watch(route, () => {
 					to: '/settings/mod-actions',
 				}" :class="appState.selectedGuild ? undefined : 'disabled'" />
 			</div>
+			<!-- Developer Settings -->
+			<VerticalNavSectionTitle :item="{
+				heading: 'Developer Settings',
+			}" v-if="loginData.userData?.isBotOwner" />
+			<div v-if="loginData.userData?.isBotOwner">
+				<VerticalNavLink :item="{
+					title: 'Global Bot Settings',
+					icon: 'ic-baseline-discord',
+					to: '/settings/bot-global'
+				}" />
+				<div>
+					<VTooltip activator="parent" v-if="!appState.selectedGuild" location="bottom">
+						Select a Server to access this
+					</VTooltip>
+					<VerticalNavLink :item="{
+						title: 'Server Data Previewer',
+						icon: 'ic-baseline-discord',
+						to: '/debug/guild-data-viewer'
+					}" :class="appState.selectedGuild ? undefined : 'disabled'" />
+				</div>
+			</div>
 		</template>
 
 		<!-- 👉 Pages -->
-		<slot v-if="isBotOwner(loginData.userData as UserData)" />
-		<VRow v-if="!isBotOwner(loginData.userData as UserData)">
+		<slot v-if="loginData.userData?.isBotOwner" />
+		<VRow v-if="!loginData.userData?.isBotOwner">
 			<VCard>
 				<VCardTitle class="ma-4">
 					RTByte Dashboard Disabled
