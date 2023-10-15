@@ -12,6 +12,8 @@ const guildStore = useGuildStore();
 import { useGuildChannelsStore } from '@/stores/api/discord/guildChannels';
 const guildChannelsStore = useGuildChannelsStore();
 import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
+import { useGuildMembersStore } from '@/stores/api/discord/guildMembers';
+const guildMembersStore = useGuildMembersStore();
 
 let selectedDatatype = ref('guild');
 let selectedDatumID = ref('');
@@ -25,6 +27,7 @@ const dataTypeOptions: { value: string, display: string }[] = [
 const topLevelData = computed(() => {
 	switch (selectedDatatype.value) {
 		case 'guildChannels': return guildChannelsStore.guildChannels;
+		case 'guildMembers': return guildMembersStore.guildMembers;
 		case 'guild': return guildStore.guild ? [guildStore.guild] : [];
 		default: return [];
 	}
@@ -38,6 +41,7 @@ const selectedDatum = computed(() => {
 onMounted(async () => {
 	if (!guildStore.guild) await guildStore.fetch();
 	if (!guildChannelsStore.guildChannels.length) await guildChannelsStore.fetchAll();
+	if (!guildMembersStore.guildMembers.length) await guildMembersStore.fetch();
 });
 
 const displayNestedType = computed(() =>
