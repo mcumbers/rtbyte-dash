@@ -85,10 +85,10 @@ appState.$subscribe(() => {
 						</VCol>
 						<VDivider />
 						<!-- Root Object Table -->
-						<v-table v-if="!displayNestedType">
+						<v-table v-if="!displayNestedType" fixed-header height="750px" :density="'compact'">
 							<thead>
 								<tr>
-									<th class="text-left" v-for="key in Object.keys(topLevelData[0] || {})">
+									<th v-for="key in Object.keys(topLevelData[0] || {})">
 										{{ key }}
 									</th>
 								</tr>
@@ -96,13 +96,15 @@ appState.$subscribe(() => {
 							<tbody>
 								<tr v-for="item in topLevelData">
 									<td v-for="value in item">
-										{{ value !== null ? value : 'NULL' }}
+										<div class="d-flex align-top w-100 h-100 mt-5 mb-5">
+											{{ value !== null ? value : 'NULL' }}
+										</div>
 									</td>
 								</tr>
 							</tbody>
 						</v-table>
 						<!-- Nested Object Table -->
-						<v-table v-if="displayNestedType">
+						<v-table v-if="displayNestedType" :density="'compact'">
 							<thead>
 								<tr>
 									<th class="text-left" v-for="key in Object.keys(selectedDatum || {})">
@@ -112,8 +114,10 @@ appState.$subscribe(() => {
 							</thead>
 							<tbody>
 								<tr>
-									<td v-for="value in selectedDatum">
-										{{ value !== null ? value : 'NULL' }}
+									<td class="text-left" v-for="value in selectedDatum">
+										<div class="d-flex align-top w-100 h-100 mt-5 mb-5">
+											{{ value !== null ? value : 'NULL' }}
+										</div>
 									</td>
 								</tr>
 							</tbody>
