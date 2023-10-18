@@ -14,6 +14,8 @@ const guildChannelsStore = useGuildChannelsStore();
 import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
 import { useGuildMembersStore } from '@/stores/api/discord/guildMembers';
 const guildMembersStore = useGuildMembersStore();
+import { useRolesStore } from '@/stores/api/discord/roles';
+const rolesStore = useRolesStore();
 
 let selectedDatatype = ref('guild');
 let selectedDatumID = ref('');
@@ -21,13 +23,15 @@ let selectedDatumID = ref('');
 const dataTypeOptions: { value: string, display: string }[] = [
 	{ value: 'guild', display: 'Guild' },
 	{ value: 'guildChannels', display: 'GuildChannels' },
-	{ value: 'guildMembers', display: 'GuildMembers' }
+	{ value: 'guildMembers', display: 'GuildMembers' },
+	{ value: 'roles', display: 'Roles' }
 ];
 
 const topLevelData = computed(() => {
 	switch (selectedDatatype.value) {
 		case 'guildChannels': return guildChannelsStore.guildChannels;
 		case 'guildMembers': return guildMembersStore.guildMembers;
+		case 'roles': return rolesStore.roles;
 		case 'guild': return guildStore.guild ? [guildStore.guild] : [];
 		default: return [];
 	}
@@ -42,11 +46,13 @@ onMounted(async () => {
 	if (!guildStore.guild) await guildStore.fetch();
 	if (!guildChannelsStore.guildChannels.length) await guildChannelsStore.fetchAll();
 	if (!guildMembersStore.guildMembers.length) await guildMembersStore.fetch();
+	if (!rolesStore.roles.length) await rolesStore.fetch();
 });
 
 const displayNestedType = computed(() =>
 	(selectedDatatype.value === 'guildChannels' && selectedDatumID.value && selectedDatumID.value.length) ||
-	(selectedDatatype.value === 'guildMembers' && selectedDatumID.value && selectedDatumID.value.length) || false
+	(selectedDatatype.value === 'guildMembers' && selectedDatumID.value && selectedDatumID.value.length) ||
+	(selectedDatatype.value === 'roles' && selectedDatumID.value && selectedDatumID.value.length) || false
 );
 
 // Return user to guild selection if guild selection cleared on this page
@@ -85,7 +91,7 @@ appState.$subscribe(() => {
 						</VCol>
 						<VDivider />
 						<!-- Root Object Table -->
-						<v-table v-if="!displayNestedType" fixed-header height="750px" :density="'compact'">
+						<v-table v-if="!displayNestedType">
 							<thead>
 								<tr>
 									<th v-for="key in Object.keys(topLevelData[0] || {})">
@@ -104,7 +110,7 @@ appState.$subscribe(() => {
 							</tbody>
 						</v-table>
 						<!-- Nested Object Table -->
-						<v-table v-if="displayNestedType" :density="'compact'">
+						<v-table v-if="displayNestedType">
 							<thead>
 								<tr>
 									<th class="text-left" v-for="key in Object.keys(selectedDatum || {})">

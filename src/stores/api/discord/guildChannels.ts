@@ -7,14 +7,33 @@ import axios from 'axios';
 const botAPI = axios.create({ baseURL: BotAPIHost, withCredentials: true });
 
 export interface APIGuildChannel {
-	id: string,
+	type: number,
 	guild: string,
+	guildId: string,
+	permissionOverwrites: string[],
+	flags: number,
+	id: string,
 	name: string,
-	type: ChannelType,
-	nsfw: boolean | null,
-	parent: string | null,
-	position: number,
-	createdTimestamp: number
+	rawPosition: number,
+	parentId: string[],
+	createdTimestamp: number,
+	messages: string[],
+	threads: string[],
+	nsfw: boolean,
+	topic: string[],
+	rateLimitPerUser: number,
+	lastPinTimestamp: number[],
+	lastMessageId: string[],
+	rtcRegion: string[],
+	bitrate: number,
+	userLimit: number,
+	videoQualityMode: number[],
+	availableTags: string[],
+	defaultReactionEmoji: string[],
+	defaultThreadRateLimitPerUser: string[],
+	defaultAutoArchiveDuration: number[],
+	defaultSortOrder: string[],
+	defaultForumLayout: number
 }
 
 export const useGuildChannelsStore = defineStore('guildChannels', {
@@ -33,22 +52,7 @@ export const useGuildChannelsStore = defineStore('guildChannels', {
 
 			if (!response.data.data || !response.data.data.channels || !response.data.data.channels.length) return this;
 
-			const channelsArr: APIGuildChannel[] = [...this.guildChannels];
-
-			for await (const resChannel of response.data.data.channels) {
-				channelsArr.push({
-					id: resChannel.id,
-					guild: resChannel.guild,
-					name: resChannel.name,
-					type: resChannel.type,
-					nsfw: resChannel.nsfw || null,
-					parent: resChannel.parentId || null,
-					position: resChannel.rawPosition,
-					createdTimestamp: resChannel.createdTimestamp
-				} as APIGuildChannel);
-			}
-
-			this.$patch({ guildChannels: channelsArr });
+			this.$patch({ guildChannels: response.data.data.channels as APIGuildChannel[] });
 			return this;
 		}
 	},
