@@ -4,7 +4,8 @@
 		<span class="d-flex align-center">
 			&copy;
 			{{ new Date().getFullYear() }}
-			<a href="https://rtbyte.xyz" target="_blank" rel="noopener noreferrer" class="text-primary ms-1">RTByte</a>
+			<a href="http://stickman.codes/stickbot" target="_blank" rel="noopener noreferrer"
+				class="text-primary ms-1">stickBot</a>
 		</span>
 		<!-- 👉 Footer: right content -->
 		<span class="d-md-flex gap-x-4 text-primary d-none">

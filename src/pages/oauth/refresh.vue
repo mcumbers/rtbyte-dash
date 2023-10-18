@@ -48,7 +48,7 @@ onMounted(async () => {
 
 			<VCardText class="pt-2">
 				<h5 class="text-h5 font-weight-semibold mb-1">
-					Logging into the RTByte Dashboard...
+					Logging into the stickBot Dashboard...
 				</h5>
 			</VCardText>
 		</VCard>

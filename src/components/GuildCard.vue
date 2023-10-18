@@ -28,7 +28,7 @@ const tooltipText = computed(() => {
 	if (!props.guildData) return null;
 	if (props.guildData.canManageServer) return null;
 	if (props.guildData.botInGuild) return 'You don\'t have permission to manage this server.';
-	return 'Ask an Administrator to add RTByte to this server!';
+	return 'Ask an Administrator to add stickBot to this server!';
 });
 
 const buttonText = computed(() => {

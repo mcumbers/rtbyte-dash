@@ -1,16 +1,16 @@
 {
-	"name": "rtbyte-dash",
+	"name": "stickbot-dash",
 	"version": "0.1.0",
 	"license": "MIT",
 	"author": "Michael Cumbers",
-	"description": "The Web Dashboard for the RTByte multipurpose Discord Bot",
+	"description": "The Web Dashboard for the stickBot multipurpose Discord Bot",
 	"private": true,
 	"scripts": {
-		"postinstall": "npm run build:icons && npm run build:prisma",
+		"postinstall": "npm run icons-build && npm run prisma-build",
 		"dev": "vite",
 		"build": "vite build",
-		"build:icons": "tsc -b src/@iconify && node src/@iconify/build-icons.js",
-		"build:prisma": "npx prisma generate",
+		"icons-build": "tsc -b src/@iconify && node src/@iconify/build-icons.js",
+		"prisma-build": "npx prisma generate",
 		"preview": "vite preview --port 5050"
 	},
 	"dependencies": {

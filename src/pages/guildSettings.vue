@@ -79,7 +79,7 @@ appState.$subscribe(() => {
 									</VCardTitle>
 									<VCardText>
 										Choose to share detailed information about your Server with the Developers of
-										RTByte. Basic information sharing can't be disabled, as it's necessary to monitor
+										stickBot. Basic information sharing can't be disabled, as it's necessary to monitor
 										the health of the Bot.
 									</VCardText>
 								</VCol>
@@ -103,7 +103,7 @@ appState.$subscribe(() => {
 									</VCardTitle>
 									<VCardText>
 										Choose to share information about commands used in your Server with the Developers
-										of RTByte.
+										of stickBot.
 									</VCardText>
 								</VCol>
 								<VCol cols="12" md="6" class="pl-8 pt-6">
@@ -125,8 +125,7 @@ appState.$subscribe(() => {
 									</VCardTitle>
 									<VCardText>
 										Choose to share information about users you've banned with other Discord Servers
-										that
-										use RTByte.
+										which use stickBot.
 									</VCardText>
 								</VCol>
 								<VCol cols="12" md="6" class="pl-8 pt-6">
@@ -145,7 +144,7 @@ appState.$subscribe(() => {
 									</VCardTitle>
 									<VCardText>
 										Choose to share information about non-ban moderation activity with other Discord
-										Servers that use RTByte.
+										Servers that use stickBot.
 									</VCardText>
 								</VCol>
 								<VCol cols="12" md="6" class="pl-8 pt-6">

@@ -57,10 +57,10 @@ watch(route, () => {
 
 				<VSpacer />
 
-				<IconBtn class="me-2" href="https://rtbyte.xyz/discord" target="_blank" rel="noopener noreferrer">
+				<IconBtn class="me-2" href="http://stickman.codes/discord" target="_blank" rel="noopener noreferrer">
 					<VIcon icon="ic-baseline-discord" />
 					<VTooltip activator="parent" open-delay="1000" scroll-strategy="close">
-						RTByte Support Discord
+						stickBot Support Discord
 					</VTooltip>
 				</IconBtn>
 
@@ -141,16 +141,16 @@ watch(route, () => {
 		<VRow v-if="!loginData.userData?.isBotOwner">
 			<VCard>
 				<VCardTitle class="ma-4">
-					RTByte Dashboard Disabled
+					stickBot Dashboard Disabled
 				</VCardTitle>
 				<VCardText class="ma-4">
-					<p>Thanks for your interest in RTByte!</p>
+					<p>Thanks for your interest in stickBot!</p>
 					<p>Unfortunately, the dashboard is currently in closed alpha, and you don't have access to use it.</p>
-					<p>If you'd like updates on when you can use the RTByte Dashboard, please join our Discord!</p>
+					<p>If you'd like updates on when you can use the stickBot Dashboard, please join our Discord!</p>
 				</VCardText>
-				<VBtn href="https://rtbyte.xyz/discord" target="_blank" class="mb-10"
+				<VBtn href="http://stickman.codes/discord" target="_blank" class="mb-10"
 					style="left: 50%; transform: translateX(-50%)">
-					RTByte Discord
+					stickBot Discord
 				</VBtn>
 			</VCard>
 		</VRow>
