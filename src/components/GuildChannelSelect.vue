@@ -32,7 +32,7 @@ const selectChannels = computed(() => {
 			case 15: namePrefix = '💬'; break; 	// Forum
 		}
 
-		if (guildChannel.parent) namePrefix = '⠀⠀⠀' + namePrefix; // Add a bit of blank space before child channel names
+		if (guildChannel.parentId) namePrefix = '⠀⠀⠀' + namePrefix; // Add a bit of blank space before child channel names
 
 		selectChannels.push({
 			title: `${namePrefix}${guildChannel.name}`,

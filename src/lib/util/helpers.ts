@@ -36,12 +36,12 @@ const textChannelTypes = [0, 5, 15];
 export function clientStyleChannelSort(inputChannels: Array<APIGuildChannel>) {
 	// First, make sure we don't have any threads--they don't have position properties
 	const allChannels = inputChannels.filter((channel) => channel.type !== 12 && channel.type !== 11);
-	const levelZero = [...allChannels].filter((channel) => !channel.parent);
+	const levelZero = [...allChannels].filter((channel) => !channel.parentId);
 	const levelOne: { parentID: string, children: Array<APIGuildChannel> }[] = [];
 
 	levelZero.forEach((l0Channel) => {
 		// Now we'll build collections of nested channels and group them by their parent
-		const l1Channels = [...allChannels].filter((l1Channel) => l1Channel.parent === l0Channel.id);
+		const l1Channels = [...allChannels].filter((l1Channel) => l1Channel.parentId === l0Channel.id);
 		// Now we'll run our three-way sort on these channels
 		// Special Channels (eg: Forums/Stages) can only exist in categories
 		// They can also freely mix with their respective types (Forums w/ Text, Stages w/ Voice)

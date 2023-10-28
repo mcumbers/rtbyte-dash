@@ -18,7 +18,7 @@ import { useRolesStore } from '@/stores/api/discord/roles';
 const rolesStore = useRolesStore();
 
 let selectedDatatype = ref('guild');
-let selectedDatumID = ref('');
+let selectedDatumID = '';
 
 const dataTypeOptions: { value: string, display: string }[] = [
 	{ value: 'guild', display: 'Guild' },
@@ -39,7 +39,7 @@ const topLevelData = computed(() => {
 
 const selectedDatum = computed(() => {
 	const dataContainer = topLevelData.value as any as any[];
-	return dataContainer.find((item: any) => item.id === selectedDatumID.value) || {};
+	return dataContainer.find((item: any) => item.id === selectedDatumID) || {};
 })
 
 onMounted(async () => {
@@ -50,9 +50,9 @@ onMounted(async () => {
 });
 
 const displayNestedType = computed(() =>
-	(selectedDatatype.value === 'guildChannels' && selectedDatumID.value && selectedDatumID.value.length) ||
-	(selectedDatatype.value === 'guildMembers' && selectedDatumID.value && selectedDatumID.value.length) ||
-	(selectedDatatype.value === 'roles' && selectedDatumID.value && selectedDatumID.value.length) || false
+	(selectedDatatype.value === 'guildChannels' && selectedDatumID && selectedDatumID.length) ||
+	(selectedDatatype.value === 'guildMembers' && selectedDatumID && selectedDatumID.length) ||
+	(selectedDatatype.value === 'roles' && selectedDatumID && selectedDatumID.length) || false
 );
 
 // Return user to guild selection if guild selection cleared on this page
@@ -86,7 +86,7 @@ appState.$subscribe(() => {
 						</VCol>
 						<!-- Channel Selector -->
 						<VCol cols="12" md="6" v-if="selectedDatatype === 'guildChannels'">
-							<GuildChannelSelect label="Channel Viewer" v-model="(selectedDatumID as string)" clearable
+							<GuildChannelSelect label="Channel Viewer" v-model="selectedDatumID" clearable
 								select-categories />
 						</VCol>
 						<VDivider />
