@@ -26,6 +26,13 @@ export const useGuildSettingsXPStore = defineStore('guildSettingsXP', {
 			const response = await botAPI.post(`/guilds/${this.guildID}/settings/xp`, { data: { guildSettingsXP: this.guildSettingsXP } });
 			this.$patch({ guildSettingsXP: response.data.data.guildSettingsXP as GuildSettingsXP });
 			return this;
+		},
+		async mee6ImportXP() {
+			if (!this.guildID) return;
+			const response = await botAPI.get(`/guilds/${this.guildID}/actions/xp/mee6-import-xp`);
+			// TODO: Error handling here. Emit event to tell user why update failed?
+			// If import succeeded, settings will have been updated.
+			if (response.status === 200) return await this.fetch();
 		}
 	},
 	persist: true
