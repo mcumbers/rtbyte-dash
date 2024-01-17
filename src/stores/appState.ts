@@ -3,6 +3,7 @@ import { GuildData } from '@/stores/api/oauth/loginData';
 import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
 import { useGuildSettingsInfoLogsStore } from '@/stores/api/bot/guildSettingsInfoLogs';
 import { useGuildSettingsModActionsStore } from '@/stores/api/bot/guildSettingsModActions';
+import { useGuildSettingsXPStore } from '@/stores/api/bot/guildSettingsXP';
 import { useGuildChannelsStore } from '@/stores/api/discord/guildChannels';
 import { useGuildStore } from '@/stores/api/discord/guild';
 import { useGuildMembersStore } from '@/stores/api/discord/guildMembers';
@@ -17,6 +18,7 @@ export const useAppState = defineStore('appState', {
 			useGuildSettingsStore().$reset();
 			useGuildSettingsInfoLogsStore().$reset();
 			useGuildSettingsModActionsStore().$reset();
+			useGuildSettingsXPStore().$reset();
 			useGuildChannelsStore().$reset();
 			useGuildStore().$reset();
 			useGuildMembersStore().$reset();
@@ -26,6 +28,7 @@ export const useAppState = defineStore('appState', {
 			useGuildSettingsStore().$reset();
 			useGuildSettingsInfoLogsStore().$reset();
 			useGuildSettingsModActionsStore().$reset();
+			useGuildSettingsXPStore().$reset();
 			useGuildChannelsStore().$reset();
 			useGuildStore().$reset();
 			useGuildMembersStore().$reset();
