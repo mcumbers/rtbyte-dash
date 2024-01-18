@@ -11,7 +11,12 @@ const logo = computed(() => {
 		: darkThemeLogo
 });
 
-const botID = new URL(window.location.href).searchParams.get('id');
+const url = new URL(window.location.href);
+
+let botID = url.searchParams.get('id');
+
+if (url.host === 'joov.sitson.me') botID = '1167655485529403553';
+
 const botInfo = BotConnections.get(botID ?? DefaultBotID);
 
 const DiscordOauthURL = `https://discord.com/oauth2/authorize`;

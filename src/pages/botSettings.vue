@@ -65,7 +65,7 @@ onMounted(async () => {
 			</VCard>
 		</VCol>
 	</VRow>
-	<VRow>
+	<VRow v-if="loginData.userData?.isBotOwner">
 		<VCardTitle>
 			PLACEHOLDER
 		</VCardTitle>
