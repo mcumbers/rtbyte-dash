@@ -31,13 +31,11 @@ export const useRolesStore = defineStore('role', {
 		}
 	},
 	actions: {
-		async fetch() {
+		async fetchAll() {
 			if (!this.guildID) return;
 			const response = await botAPI.get(`/guilds/${this.guildID}/roles`);
 
 			if (!response.data || !response.data.data || !response.data.data.roles) return this;
-
-			console.log(response.data.data.roles);
 
 			this.$patch({ roles: response.data.data.roles as APIRole[] });
 			return this;
