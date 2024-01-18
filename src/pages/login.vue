@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useTheme } from 'vuetify';
+import { BotConnections, DefaultBotID } from '@/lib/util/constants';
 
 import darkThemeLogo from '@images/wordmark-dark.svg?raw';
 import lightThemeLogo from '@images/wordmark-light.svg?raw';
@@ -10,15 +11,16 @@ const logo = computed(() => {
 		: darkThemeLogo
 });
 
+const botID = new URL(window.location.href).searchParams.get('id');
+const botInfo = BotConnections.get(botID ?? DefaultBotID);
+
 const DiscordOauthURL = `https://discord.com/oauth2/authorize`;
-
-
 const oauthURL = new URL(DiscordOauthURL);
 oauthURL.search = new URLSearchParams([
-	['redirect_uri', 'http://localhost:5173/oauth/register'],
+	['redirect_uri', botInfo?.redirect as string],
 	['response_type', 'code'],
 	['scope', ['identify', 'guilds', 'guilds.members.read'].join(' ')],
-	['client_id', '1141471276268011740']
+	['client_id', botInfo?.id as string]
 ]).toString();
 
 const oauthURLString: string = oauthURL.toString();
@@ -37,7 +39,7 @@ const oauthURLString: string = oauthURL.toString();
 
 			<VCardText class="pt-2">
 				<h5 class="text-h5 font-weight-semibold mb-1">
-					Welcome to the stickBot Dashboard!
+					Welcome to the stickbot Dashboard!
 				</h5>
 				<p class="mb-0">
 					Please sign-in to your Discord Account to Continue.

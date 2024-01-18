@@ -1,8 +1,5 @@
 import { defineStore } from 'pinia';
-import { BotAPIHost } from '@/lib/util/constants';
 import { useAppState } from '@/stores/appState';
-import axios from 'axios';
-const botAPI = axios.create({ baseURL: BotAPIHost, withCredentials: true });
 
 export interface APIRole {
 	guild: string,
@@ -33,7 +30,7 @@ export const useRolesStore = defineStore('role', {
 	actions: {
 		async fetchAll() {
 			if (!this.guildID) return;
-			const response = await botAPI.get(`/guilds/${this.guildID}/roles`);
+			const response = await useAppState().botAPI!.get(`/guilds/${this.guildID}/roles`);
 
 			if (!response.data || !response.data.data || !response.data.data.roles) return this;
 

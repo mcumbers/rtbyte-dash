@@ -1,8 +1,5 @@
 import { defineStore } from 'pinia';
-import { BotAPIHost } from '@/lib/util/constants';
 import { useAppState } from '@/stores/appState';
-import axios from 'axios';
-const botAPI = axios.create({ baseURL: BotAPIHost, withCredentials: true });
 
 export type APIMember = {
 	guildId: string,
@@ -32,7 +29,7 @@ export const useGuildMembersStore = defineStore('guildMember', {
 	actions: {
 		async fetch() {
 			if (!this.guildID) return;
-			const response = await botAPI.get(`/guilds/${this.guildID}/members`);
+			const response = await useAppState().botAPI!.get(`/guilds/${this.guildID}/members`);
 
 			if (!response.data || !response.data.data || !response.data.data.guildMembers) return this;
 

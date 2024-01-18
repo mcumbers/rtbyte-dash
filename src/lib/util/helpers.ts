@@ -1,6 +1,7 @@
 import { UserData, GuildData } from "@/stores/api/oauth/loginData";
-import { BotID, BotPermissions } from "@/lib/util/constants";
+import { BotPermissions } from "@/lib/util/constants";
 import { APIGuildChannel } from "@/stores/api/discord/guildChannels";
+import { useAppState } from "@/stores/appState";
 
 export function avatarURL(userData: UserData) {
 	const fileExt: string = userData.avatar.startsWith('a_') ? 'gif' : 'png';
@@ -20,7 +21,7 @@ export function botInviteString(guildData: GuildData | null) {
 	const botInvite: URL = new URL('https://discord.com/oauth2/authorize');
 	const paramsArr = [
 		['scope', 'bot'],
-		['client_id', BotID],
+		['client_id', useAppState().botID as string],
 		['permissions', BotPermissions]
 	];
 	if (guildData) paramsArr.push(['guild_id', guildData.id]);

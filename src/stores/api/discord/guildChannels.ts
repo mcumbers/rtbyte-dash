@@ -1,10 +1,5 @@
 import { defineStore } from 'pinia';
-import { BotAPIHost } from '@/lib/util/constants';
-import { GuildSettings } from '@prisma/client';
 import { useAppState } from '@/stores/appState';
-import { type ChannelType } from 'discord.js';
-import axios from 'axios';
-const botAPI = axios.create({ baseURL: BotAPIHost, withCredentials: true });
 
 export interface APIGuildChannel {
 	type: number,
@@ -49,7 +44,7 @@ export const useGuildChannelsStore = defineStore('guildChannels', {
 	actions: {
 		async fetchAll() {
 			if (!this.guildID) return;
-			const response = await botAPI.get(`/guilds/${this.guildID}/channels`);
+			const response = await useAppState().botAPI!.get(`/guilds/${this.guildID}/channels`);
 
 			if (!response.data.data || !response.data.data.channels || !response.data.data.channels.length) return this;
 

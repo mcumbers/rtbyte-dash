@@ -18,12 +18,14 @@ const logo = computed(() => {
 const errorTimeout = 3 * 1000;
 const errorRedirect = 5 * 1000;
 
+const botID = new URL(window.location.href).searchParams.get('id');
 const oAuthCode = new URL(window.location.href).searchParams.get('code');
+
 let showError = false;
 
 onMounted(async () => {
 	if (oAuthCode) {
-		const fetchedData = await loginData.login(oAuthCode ?? '');
+		const fetchedData = await loginData.login(oAuthCode ?? '', botID ?? '');
 		if (fetchedData?.userData?.id) return router.push({ name: 'guilds' });
 	}
 
@@ -52,7 +54,7 @@ onMounted(async () => {
 
 			<VCardText class="pt-2">
 				<h5 class="text-h5 font-weight-semibold mb-1">
-					Logging into the stickBot Dashboard...
+					Logging into the stickbot Dashboard...
 				</h5>
 			</VCardText>
 		</VCard>

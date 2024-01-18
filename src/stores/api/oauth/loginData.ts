@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia';
-import { BotAPIHost } from '@/lib/util/constants';
-import axios from 'axios';
-const botAPI = axios.create({ baseURL: BotAPIHost, withCredentials: true });
+import { useAppState } from '@/stores/appState';
 
 export interface UserData {
 	id: string,
@@ -56,10 +54,11 @@ export const useLoginDataStore = defineStore('loginData', {
 	state: () => ({ userData: null as UserData | null, userGuilds: [] as GuildData[], botData: null as BotData | null, lastRefresh: 0 as Number }),
 	getters: {},
 	actions: {
-		async login(oAuthCode: string) {
+		async login(oAuthCode: string, botID: string) {
 			try {
+				useAppState().$patch({ botID });
 				// Post the oAuth Code to the bot to authenticate
-				const response = await botAPI.post('/oauth/callback', { code: oAuthCode });
+				const response = await useAppState().botAPI!.post('/oauth/callback', { code: oAuthCode });
 
 				// Grab the login data from the response, and put it in our app's store
 				this.$patch({ userData: response.data.user, userGuilds: response.data.guilds, botData: response.data.bot, lastRefresh: Date.now() });
@@ -72,7 +71,7 @@ export const useLoginDataStore = defineStore('loginData', {
 		async logOut() {
 			try {
 				// Tell the bot to invalidate our token
-				await botAPI.post('/oauth/logout');
+				await useAppState().botAPI!.post('/oauth/logout');
 			} catch (error) {
 				console.log(error);
 			}
@@ -80,7 +79,7 @@ export const useLoginDataStore = defineStore('loginData', {
 		async refreshData() {
 			try {
 				// Post the oAuth Code to the bot to authenticate
-				const response = await botAPI.post('/oauth/refresh');
+				const response = await useAppState().botAPI!.post('/oauth/refresh');
 
 				// Grab the login data from the response, and put it in our app's store
 				this.$patch({ userData: response.data.user, userGuilds: response.data.guilds, botData: response.data.bot, lastRefresh: Date.now() });

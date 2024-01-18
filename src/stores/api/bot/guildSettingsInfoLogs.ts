@@ -1,9 +1,6 @@
 import { defineStore } from 'pinia';
-import { BotAPIHost } from '@/lib/util/constants';
 import { GuildSettingsInfoLogs } from '@prisma/client';
 import { useAppState } from '@/stores/appState';
-import axios from 'axios';
-const botAPI = axios.create({ baseURL: BotAPIHost, withCredentials: true });
 
 export const useGuildSettingsInfoLogsStore = defineStore('guildSettingsInfoLogs', {
 	state: () => ({
@@ -17,13 +14,13 @@ export const useGuildSettingsInfoLogsStore = defineStore('guildSettingsInfoLogs'
 	actions: {
 		async fetch() {
 			if (!this.guildID) return;
-			const response = await botAPI.get(`/guilds/${this.guildID}/settings/info-logs`);
+			const response = await useAppState().botAPI!.get(`/guilds/${this.guildID}/settings/info-logs`);
 			this.$patch({ guildSettingsInfoLogs: response.data.data.guildSettingsInfoLogs as GuildSettingsInfoLogs });
 			return this;
 		},
 		async update() {
 			if (!this.guildID) return;
-			const response = await botAPI.post(`/guilds/${this.guildID}/settings/info-logs`, { data: { guildSettingsInfoLogs: this.guildSettingsInfoLogs } });
+			const response = await useAppState().botAPI!.post(`/guilds/${this.guildID}/settings/info-logs`, { data: { guildSettingsInfoLogs: this.guildSettingsInfoLogs } });
 			this.$patch({ guildSettingsInfoLogs: response.data.data.guildSettingsInfoLogs as GuildSettingsInfoLogs });
 			return this;
 		}

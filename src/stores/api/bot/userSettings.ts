@@ -1,9 +1,7 @@
 import { defineStore } from 'pinia';
-import { BotAPIHost } from '@/lib/util/constants';
 import { UserSettings } from '@prisma/client';
 import { useLoginDataStore } from '@/stores/api/oauth/loginData';
-import axios from 'axios';
-const botAPI = axios.create({ baseURL: BotAPIHost, withCredentials: true });
+import { useAppState } from '@/stores/appState';
 
 export const useUserSettingsStore = defineStore('userSettings', {
 	state: () => ({
@@ -14,12 +12,12 @@ export const useUserSettingsStore = defineStore('userSettings', {
 		async fetch() {
 			let userID = this.userSettings?.id;
 			if (!userID) userID = useLoginDataStore().userData?.id;
-			const response = await botAPI.get(`/users/${userID}/settings`);
+			const response = await useAppState().botAPI!.get(`/users/${userID}/settings`);
 			this.$patch({ userSettings: response.data.data.userSettings as UserSettings });
 			return this;
 		},
 		async update() {
-			const response = await botAPI.post(`/users/${this.userSettings?.id}/settings`, { data: { userSettings: this.userSettings } });
+			const response = await useAppState().botAPI!.post(`/users/${this.userSettings?.id}/settings`, { data: { userSettings: this.userSettings } });
 			this.$patch({ userSettings: response.data.data.userSettings as UserSettings });
 			return this;
 		}

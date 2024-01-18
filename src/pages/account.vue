@@ -6,6 +6,7 @@ const userSettingsStore = useUserSettingsStore();
 
 import { ReadableLanguageTags, ReadableMeasurementSystems } from '@/lib/util/readableTypes'
 import { avatarURL } from '@/lib/util/helpers';
+import { useAppState } from '@/stores/appState';
 
 let userSettingsLocal = ref({ ...userSettingsStore.userSettings });
 let deactivateConfirm = ref(false);
@@ -89,7 +90,8 @@ onMounted(async () => {
 						Bot Deactivated
 					</h1>
 					<p class="ma-2 pa-2">
-						You have opted out of using stickBot. You cannot use stickBot Commands or Features unless you
+						You have opted out of using {{ useAppState().botInfo?.name }}. You cannot use {{
+							useAppState().botInfo?.name }} Commands or Features unless you
 						Activate
 						them again.
 					</p>
@@ -105,7 +107,8 @@ onMounted(async () => {
 			<VCard title="Opt Out">
 				<VCardText>
 					<p class="ma-2 pa-2">
-						If you do not want stickBot to store any of your personal information, you can Opt Out of using it.
+						If you do not want {{ useAppState().botInfo?.name }} to store any of your personal information, you
+						can Opt Out of using it.
 						Doing so will prevent you from using any commands or features of the bot.
 					</p>
 					<p class="ma-2 pa-2">
@@ -114,7 +117,7 @@ onMounted(async () => {
 					</p>
 					<div>
 						<VCheckbox v-model="deactivateConfirm" class="ml-4"
-							label="I want to Opt Out of stickBot storing my personal data" />
+							label="I want to Opt Out of the bot storing my personal data" />
 					</div>
 
 					<VBtn :disabled="!deactivateConfirm" color="error" class="mt-3 ml-4"
