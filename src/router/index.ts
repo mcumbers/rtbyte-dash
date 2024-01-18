@@ -34,6 +34,11 @@ const router = createRouter({
 					component: () => import('../pages/guildSettingsModActions.vue'),
 				},
 				{
+					path: 'settings/xp',
+					name: 'settings-xp',
+					component: () => import('../pages/guildSettingsXP.vue'),
+				},
+				{
 					path: 'settings/bot-global',
 					name: 'settings-bot-global',
 					component: () => import('../pages/botSettings.vue'),
