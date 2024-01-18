@@ -46,7 +46,7 @@ onMounted(async () => {
 	if (!guildStore.guild) await guildStore.fetch();
 	if (!guildChannelsStore.guildChannels.length) await guildChannelsStore.fetchAll();
 	if (!guildMembersStore.guildMembers.length) await guildMembersStore.fetch();
-	if (!rolesStore.roles.length) await rolesStore.fetch();
+	if (!rolesStore.roles.length) await rolesStore.fetchAll();
 });
 
 const displayNestedType = computed(() =>
