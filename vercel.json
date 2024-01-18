@@ -1,7 +1,7 @@
 {
 	"headers": [
 		{
-			"source": "e-prem-01.hosts.optikservers.com:35524/(.*)",
+			"source": "de-prem-01.hosts.optikservers.com:35524/(.*)",
 			"headers": [
 				{
 					"key": "Access-Control-Allow-Credentials",
