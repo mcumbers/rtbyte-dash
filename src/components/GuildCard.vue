@@ -56,14 +56,14 @@ const buttonText = computed(() => {
 					</div>
 				</div>
 			</VCardText>
-			<div class="pb-5" v-if="!isSelected">
+			<div class="pb-5">
 				<!-- Dim & Disabled button if user can't manage guild -->
 				<VBtn v-if="buttonText || isSelected"
 					:variant="!props.guildData.canManageServer || !props.guildData.botInGuild ? 'tonal' : undefined"
 					:disabled="!props.guildData.canManageServer || isSelected"
 					:href="!props.guildData.botInGuild ? botInviteString(props.guildData) : undefined"
 					style="left: 50%; transform: translateX(-50%)" @click="selectGuild()">
-					{{ isSelected ? 'Managing Server...' : buttonText }}
+					{{ isSelected ? 'Selected' : buttonText }}
 				</VBtn>
 				<VTooltip v-if="tooltipText" activator="parent" open-delay="100" scroll-strategy="close">
 					{{ tooltipText }}
