@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { useLoginDataStore } from '@/stores/api/oauth/loginData';
+import { useAppState } from '@/stores/appState';
 import GuildCard from '@/components/GuildCard.vue';
 const loginData = useLoginDataStore();
+const appState = useAppState();
 
 let guilds = ref(loginData!.userGuilds);
 
 onMounted(() => {
+	if (appState.botInfo?.name) document.title = appState.botInfo?.name;
+
 	guilds.value = loginData!.userGuilds
 		// Sort them Alphabetically
 		.sort((a, b) => a.name > b.name ? 1 : 0)
