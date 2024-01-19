@@ -9,7 +9,7 @@ export interface BotInfo {
 // This currently requests Administrator perms at all times
 export const BotPermissions: string = '8';
 
-export const DefaultBotID: string = '1141471276268011740';
+export const DefaultBotID: string = '284970288700194818';
 
 export const BotConnections: Map<string, BotInfo> = new Map([
 	['1141471276268011740', { id: '1141471276268011740', name: 'stickbot indev', apiHost: 'http://localhost:4000', redirect: 'http://localhost:5173/oauth/register?id=1141471276268011740' }],
