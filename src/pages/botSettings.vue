@@ -1,10 +1,14 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router';
 const router = useRouter();
-import { useLoginDataStore } from '@/stores/api/oauth/loginData';
+import { GuildData, useLoginDataStore } from '@/stores/api/oauth/loginData';
 const loginData = useLoginDataStore();
 import { useBotGlobalSettingsStore } from '@/stores/api/bot/botGlobalSettings';
 const botGlobalSettingsStore = useBotGlobalSettingsStore();
+import { useAppState } from '@/stores/appState';
+const appState = useAppState();
+
+import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
 
 // Return user to guild selection if not a bot owner
 if (!loginData.userData?.isBotOwner) router.push({ name: 'guilds' });
@@ -23,6 +27,9 @@ async function updateSettings() {
 
 onMounted(async () => {
 	if (!botGlobalSettingsStore.botGlobalSettings) await botGlobalSettingsStore.fetch();
+	const controlGuild = loginData.userGuilds.find((guild) => guild.id === botGlobalSettingsStore.botGlobalSettings?.controlGuildID);
+	appState.selectGuild(controlGuild as GuildData);
+
 	resetForm();
 });
 
@@ -48,6 +55,15 @@ onMounted(async () => {
 					<!-- Form -->
 					<VForm class="mt-6">
 						<VRow>
+							<VCol cols="12" md="6" class="pr-8">
+								<GuildChannelSelect label="Private Global Log Channel"
+									v-model="(botGlobalSettingsLocal.globalLogChannelPrivate as string)" clearable />
+							</VCol>
+							<VCol cols="12" md="6" class="pr-8">
+								<GuildChannelSelect label="Public Global Log Channel"
+									v-model="(botGlobalSettingsLocal.globalLogChannelPublic as string)" clearable />
+							</VCol>
+
 							<VDivider class="ma-6 mb-8" />
 
 							<!-- Form Actions -->
