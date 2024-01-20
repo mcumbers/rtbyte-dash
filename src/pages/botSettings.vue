@@ -81,17 +81,21 @@ onMounted(async () => {
 			</VCard>
 		</VCol>
 	</VRow>
+
 	<VRow v-if="loginData.userData?.isBotOwner">
-		<VCardTitle>
-			PLACEHOLDER
-		</VCardTitle>
-		<VCard v-for="value, setting in botGlobalSettingsLocal">
-			<VCardTitle>
-				{{ setting }}
-			</VCardTitle>
-			<VCardText>
-				{{ value }}
-			</VCardText>
-		</VCard>
+		<VCol cols="12">
+			<VCard title="PLACEHOLDER">
+				<VRow v-for="value, setting in botGlobalSettingsLocal">
+					<VCol cols="12">
+						<VCardTitle>
+							{{ setting }}
+						</VCardTitle>
+						<VCardText>
+							{{ value }}
+						</VCardText>
+					</VCol>
+				</VRow>
+			</VCard>
+		</VCol>
 	</VRow>
 </template>

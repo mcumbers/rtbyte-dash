@@ -3,6 +3,8 @@ import { useRouter } from 'vue-router';
 const router = useRouter();
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
+import { useLoginDataStore } from '@/stores/api/oauth/loginData';
+const loginData = useLoginDataStore();
 // Return user to guild selection if no guild selected
 if (!appState.selectedGuild) router.push({ name: 'guilds' });
 
@@ -34,16 +36,24 @@ appState.$subscribe(() => {
 
 <template>
 	<VRow v-if="appState.selectedGuild">
-		<VCardTitle>
-			PLACEHOLDER
-		</VCardTitle>
-		<VCard v-for="value, setting in guildSettingsModActionsLocal">
-			<VCardTitle>
-				{{ setting }}
-			</VCardTitle>
-			<VCardText>
-				{{ value }}
-			</VCardText>
-		</VCard>
+		<VCol cols="12">
+			<h3>Coming Soon...</h3>
+		</VCol>
+	</VRow>
+	<VRow v-if="loginData.userData?.isBotOwner">
+		<VCol cols="12">
+			<VCard title="PLACEHOLDER">
+				<VRow v-for="value, setting in guildSettingsModActionsLocal">
+					<VCol cols="12">
+						<VCardTitle>
+							{{ setting }}
+						</VCardTitle>
+						<VCardText>
+							{{ value }}
+						</VCardText>
+					</VCol>
+				</VRow>
+			</VCard>
+		</VCol>
 	</VRow>
 </template>

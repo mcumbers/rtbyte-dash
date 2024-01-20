@@ -184,17 +184,20 @@ appState.$subscribe(() => {
 		</VCol>
 	</VRow>
 
-	<VRow v-if="appState.selectedGuild">
-		<VCardTitle>
-			PLACEHOLDER
-		</VCardTitle>
-		<VCard v-for="value, setting in guildSettingsXPLocal">
-			<VCardTitle>
-				{{ setting }}
-			</VCardTitle>
-			<VCardText>
-				{{ value }}
-			</VCardText>
-		</VCard>
+	<VRow v-if="loginData.userData?.isBotOwner">
+		<VCol cols="12">
+			<VCard title="PLACEHOLDER">
+				<VRow v-for="value, setting in guildSettingsXPLocal">
+					<VCol cols="12">
+						<VCardTitle>
+							{{ setting }}
+						</VCardTitle>
+						<VCardText>
+							{{ value }}
+						</VCardText>
+					</VCol>
+				</VRow>
+			</VCard>
+		</VCol>
 	</VRow>
 </template>
