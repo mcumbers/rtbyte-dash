@@ -5,11 +5,15 @@ export interface BotInfo {
 	redirect: string
 }
 
+export type Placeholder = 'BOT_NAME' | 'BOT_MENTION' | 'GUILD_NAME' | 'GUILD_SIZE' | 'MEMBER_NAME' | 'MEMBER_MENTION' | 'USER_USERNAME' | 'USER_MENTION' | 'CHANNEL_NAME' | 'CHANNEL_MENTION' | 'XP_TOTAL' | 'XP_LEVEL_XP' | 'XP_LEVEL' | 'MESSAGE';
+
+export type AvailablePlaceholders = Placeholder[];
+
 // TODO: Calculate actual needed Bot Permissions
 // This currently requests Administrator perms at all times
 export const BotPermissions: string = '8';
 
-export const DefaultBotID: string = '284970288700194818';
+export const DefaultBotID: string = '1141471276268011740';
 
 export const BotConnections: Map<string, BotInfo> = new Map([
 	['1141471276268011740', { id: '1141471276268011740', name: 'stickbot indev', apiHost: 'http://localhost:4000', redirect: 'http://localhost:5173/oauth/register?id=1141471276268011740' }],
