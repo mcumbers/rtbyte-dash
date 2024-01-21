@@ -8,6 +8,9 @@ const botGlobalSettingsStore = useBotGlobalSettingsStore();
 import { useAppState } from '@/stores/appState';
 const appState = useAppState();
 
+const controlGuild = loginData.userGuilds.find((guild) => guild.id === botGlobalSettingsStore.botGlobalSettings?.controlGuildID);
+appState.selectGuild(controlGuild as GuildData);
+
 import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
 
 // Return user to guild selection if not a bot owner
@@ -27,12 +30,13 @@ async function updateSettings() {
 
 onMounted(async () => {
 	if (!botGlobalSettingsStore.botGlobalSettings) await botGlobalSettingsStore.fetch();
-	const controlGuild = loginData.userGuilds.find((guild) => guild.id === botGlobalSettingsStore.botGlobalSettings?.controlGuildID);
-	appState.selectGuild(controlGuild as GuildData);
-
 	resetForm();
 });
 
+// Return user to guild selection if guild selection cleared on this page
+appState.$subscribe(() => {
+	if (!appState.selectedGuild) router.push({ name: 'guilds' });
+});
 </script>
 
 <template>
