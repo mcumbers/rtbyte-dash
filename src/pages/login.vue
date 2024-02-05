@@ -16,6 +16,7 @@ const url = new URL(window.location.href);
 let botID = url.searchParams.get('id');
 
 if (url.host === 'joov.sitson.me') botID = '1167655485529403553';
+if (url.host === 'stickbot.stickman.codes') botID = '284970288700194818';
 
 const botInfo = BotConnections.get(botID ?? DefaultBotID);
 
