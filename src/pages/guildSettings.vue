@@ -12,7 +12,11 @@ import { iconURL } from '@/lib/util/helpers';
 import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
 
 import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
+import TemplateMessageEditor from '@/components/TemplateMessageEditor.vue';
 const guildSettingsStore = useGuildSettingsStore();
+
+import type { AvailablePlaceholders } from '@/lib/util/constants';
+const availablePlaceholders: AvailablePlaceholders = ['BOT_NAME', 'BOT_MENTION', 'GUILD_NAME', 'GUILD_SIZE', 'MEMBER_NAME', 'MEMBER_MENTION', 'USER_USERNAME', 'USER_MENTION', 'CHANNEL_NAME', 'CHANNEL_MENTION'];
 
 let guildSettingsLocal = ref({ ...guildSettingsStore.guildSettings });
 
@@ -172,15 +176,18 @@ appState.$subscribe(() => {
 												v-model="guildSettingsLocal.greetingWelcomeEnabled" />
 										</VCol>
 									</VRow>
-									<VRow match-height v-if="guildSettingsLocal.greetingWelcomeEnabled">
-										<VCol cols="6" class="pl-8 pr-6">
-											<VTextField label="Welcome Message"
-												v-model="guildSettingsLocal.greetingWelcomeMessage" />
-										</VCol>
+									<VRow v-if="guildSettingsLocal.greetingWelcomeEnabled">
 										<VCol cols="6" class="pl-8 pr-6">
 											<GuildChannelSelect label="Welcome Message Channel"
 												v-model="(guildSettingsLocal.greetingWelcomeChannel as string)" clearable />
 										</VCol>
+										<VCol cols="12" class="pl-8 pr-6">
+											<TemplateMessageEditor
+												v-model="(guildSettingsLocal.greetingWelcomeMessage as string)"
+												:available-placeholders="availablePlaceholders" label="Welcome Message"
+												clearable />
+										</VCol>
+
 									</VRow>
 								</VCol>
 							</VRow>
@@ -198,14 +205,16 @@ appState.$subscribe(() => {
 												v-model="guildSettingsLocal.greetingGoodbyeEnabled" />
 										</VCol>
 									</VRow>
-									<VRow match-height v-if="guildSettingsLocal.greetingGoodbyeEnabled">
-										<VCol cols="6" class="pl-8 pr-6">
-											<VTextField label="Goodbye Message"
-												v-model="guildSettingsLocal.greetingGoodbyeMessage" />
-										</VCol>
+									<VRow v-if="guildSettingsLocal.greetingGoodbyeEnabled">
 										<VCol cols="6" class="pl-8 pr-6">
 											<GuildChannelSelect label="Goodbye Message Channel"
 												v-model="(guildSettingsLocal.greetingGoodbyeChannel as string)" clearable />
+										</VCol>
+										<VCol cols="12" class="pl-8 pr-6">
+											<TemplateMessageEditor
+												v-model="(guildSettingsLocal.greetingGoodbyeMessage as string)"
+												:available-placeholders="availablePlaceholders" label="Goodbye Message"
+												clearable />
 										</VCol>
 									</VRow>
 								</VCol>
