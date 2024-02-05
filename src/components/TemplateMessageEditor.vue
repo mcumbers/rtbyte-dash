@@ -7,6 +7,7 @@ interface Props {
 	modelValue: string | null,
 	label?: string,
 	clearable?: boolean,
+	disabled?: boolean,
 	hint?: string,
 	availablePlaceholders?: AvailablePlaceholders
 };
@@ -64,7 +65,7 @@ function handleClick(event: MouseEvent | KeyboardEvent, value: string) {
 </script>
 
 <template>
-	<VCard :variant="cardVariant" class="pt-2">
+	<VCard :variant="cardVariant" class="pt-2" :disabled="disabled">
 		<VCardSubtitle class="pb-5" v-if="availablePlaceholders?.length">
 			Message Variables
 		</VCardSubtitle>
