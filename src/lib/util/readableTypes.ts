@@ -1,6 +1,30 @@
 import { MeasurementSystem, LanguageTag, ModActionType } from "@prisma/client";
 import { ChannelType } from 'discord.js';
 
+import { Placeholder } from "./constants";
+
+export type ReadablePlaceholderType = {
+	value: Placeholder,
+	display: string
+}
+
+export const ReadablePlaceholderTypes: Record<keyof typeof Placeholder, ReadablePlaceholderType> = {
+	'BOT_NAME': { value: Placeholder.BOT_NAME, display: 'Bot Name' },
+	'BOT_MENTION': { value: Placeholder.BOT_MENTION, display: 'Bot @Mention' },
+	'GUILD_NAME': { value: Placeholder.GUILD_NAME, display: 'Server Name' },
+	'GUILD_SIZE': { value: Placeholder.GUILD_SIZE, display: 'Server Size' },
+	'MEMBER_NAME': { value: Placeholder.MEMBER_NAME, display: 'Member Name' },
+	'MEMBER_MENTION': { value: Placeholder.MEMBER_MENTION, display: 'Member @Mention' },
+	'USER_USERNAME': { value: Placeholder.USER_USERNAME, display: 'User Name' },
+	'USER_MENTION': { value: Placeholder.USER_MENTION, display: 'User @Mention' },
+	'CHANNEL_NAME': { value: Placeholder.CHANNEL_NAME, display: 'Channel Name' },
+	'CHANNEL_MENTION': { value: Placeholder.CHANNEL_MENTION, display: 'Channel #Mention' },
+	'XP_TOTAL': { value: Placeholder.XP_TOTAL, display: 'Member Total XP' },
+	'XP_LEVEL_XP': { value: Placeholder.XP_LEVEL_XP, display: 'Member Level XP' },
+	'XP_LEVEL': { value: Placeholder.XP_LEVEL, display: 'Member Level' },
+	'MESSAGE': { value: Placeholder.MESSAGE, display: 'Message' }
+}
+
 export type ReadableGuildChannelType = {
 	value: ChannelType,
 	display: string

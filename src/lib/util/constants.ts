@@ -5,9 +5,24 @@ export interface BotInfo {
 	redirect: string
 }
 
-export type Placeholder = 'BOT_NAME' | 'BOT_MENTION' | 'GUILD_NAME' | 'GUILD_SIZE' | 'MEMBER_NAME' | 'MEMBER_MENTION' | 'USER_USERNAME' | 'USER_MENTION' | 'CHANNEL_NAME' | 'CHANNEL_MENTION' | 'XP_TOTAL' | 'XP_LEVEL_XP' | 'XP_LEVEL' | 'MESSAGE';
+export enum Placeholder {
+	BOT_NAME = '%BOT_NAME%',
+	BOT_MENTION = '%BOT_MENTION%',
+	GUILD_NAME = '%GUILD_NAME%',
+	GUILD_SIZE = '%GUILD_SIZE%',
+	MEMBER_NAME = '%MEMBER_NAME%',
+	MEMBER_MENTION = '%MEMBER_MENTION%',
+	USER_USERNAME = '%USER_USERNAME%',
+	USER_MENTION = '%USER_MENTION%',
+	CHANNEL_NAME = '%CHANNEL_NAME%',
+	CHANNEL_MENTION = '%CHANNEL_MENTION%',
+	XP_TOTAL = '%XP_TOTAL%',
+	XP_LEVEL_XP = '%XP_LEVEL_XP%',
+	XP_LEVEL = '%XP_LEVEL%',
+	MESSAGE = '%MESSAGE%'
+}
 
-export type AvailablePlaceholders = Placeholder[];
+export type AvailablePlaceholders = Array<keyof typeof Placeholder>;
 
 // TODO: Calculate actual needed Bot Permissions
 // This currently requests Administrator perms at all times

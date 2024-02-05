@@ -1,33 +1,22 @@
 <script setup lang="ts">
 import { VNodeRef } from 'vue';
 import { AvailablePlaceholders } from '@/lib/util/constants';
+import { ReadablePlaceholderTypes } from '@/lib/util/readableTypes';
 
 interface Props {
-	modelValue: string,
-	availablePlaceholders: AvailablePlaceholders
+	modelValue: string | null,
+	label?: string,
+	clearable?: boolean,
+	hint?: string,
+	availablePlaceholders?: AvailablePlaceholders
 };
 
 const props = defineProps<Props>();
 defineEmits(['update:modelValue']);
 
-const showBotName = props.availablePlaceholders.includes('BOT_NAME');
-const showBotMention = props.availablePlaceholders.includes('BOT_MENTION');
-const showGuildName = props.availablePlaceholders.includes('GUILD_NAME');
-const showGuildSize = props.availablePlaceholders.includes('GUILD_SIZE');
-const showMemberName = props.availablePlaceholders.includes('MEMBER_NAME');
-const showMemberMention = props.availablePlaceholders.includes('MEMBER_MENTION');
-const showUserUsername = props.availablePlaceholders.includes('USER_USERNAME');
-const showUserMention = props.availablePlaceholders.includes('USER_MENTION');
-const showChannelName = props.availablePlaceholders.includes('CHANNEL_NAME');
-const showChannelMention = props.availablePlaceholders.includes('CHANNEL_MENTION');
-const showXPTotal = props.availablePlaceholders.includes('XP_TOTAL');
-const showXPLevelXP = props.availablePlaceholders.includes('XP_LEVEL_XP');
-const showXPLevel = props.availablePlaceholders.includes('XP_LEVEL');
-const showMessage = props.availablePlaceholders.includes('MESSAGE');
+const cardVariant = props.availablePlaceholders?.length ? 'outlined' : 'plain';
 
-const cardVariant = props.availablePlaceholders.length ? 'outlined' : 'plain';
-
-const localValue = ref(props.modelValue);
+const localValue = ref(props.modelValue as string);
 
 interface ContextualEventTarget extends EventTarget {
 	value: string
@@ -50,15 +39,17 @@ function handleDrop(event: ContextualDragEvent) {
 
 const messagebox = ref<VNodeRef | null>(null);
 
-function focusInput() {
+function focusInput(cursorPosition?: number) {
 	if (!messagebox.value) return;
-	messagebox.value.focus();
+	const box = messagebox.value as HTMLInputElement;
+	box.focus();
+	if (cursorPosition) box.setSelectionRange(cursorPosition, cursorPosition);
 };
 
 function handleClick(event: MouseEvent | KeyboardEvent, value: string) {
-	if (!value) return;
-	const box = document.getElementById('messagebox') as HTMLInputElement;
-	if (!box) return;
+	if (!event || !value) return;
+	if (!messagebox.value) return;
+	const box = messagebox.value as HTMLInputElement;
 
 	const cursor = box.selectionEnd ?? 0;
 
@@ -68,79 +59,30 @@ function handleClick(event: MouseEvent | KeyboardEvent, value: string) {
 
 	localValue.value = newValue;
 
-	box.selectionEnd = cursor + value.length;
+	focusInput(cursor + value.length);
 }
-
 </script>
 
 <template>
 	<VCard :variant="cardVariant" class="pt-2">
-		<VCardSubtitle class="pb-5" v-if="availablePlaceholders.length">
+		<VCardSubtitle class="pb-5" v-if="availablePlaceholders?.length">
 			Message Variables
 		</VCardSubtitle>
-		<VRow class="pl-5 pr-5">
+		<VRow class="pl-5 pr-5" v-if="availablePlaceholders?.length">
 			<!-- Draggable Placeholders -->
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%BOT_NAME%')"
-				@click="handleClick($event, '%BOT_NAME%')" v-if="showBotName">
-				Bot Name
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%BOT_MENTION%')"
-				@click="handleClick($event, '%BOT_MENTION%')" v-if="showBotMention">
-				Bot Mention
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%GUILD_NAME%')"
-				@click="handleClick($event, '%GUILD_NAME%')" v-if="showGuildName">
-				Server Name
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%GUILD_SIZE%')"
-				@click="handleClick($event, '%GUILD_SIZE%')" v-if="showGuildSize">
-				Server Size
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%MEMBER_NAME%')"
-				@click="handleClick($event, '%MEMBER_NAME%')" v-if="showMemberName">
-				Member Name
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%MEMBER_MENTION%')"
-				@click="handleClick($event, '%MEMBER_MENTION%')" v-if="showMemberMention">
-				Member Mention
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%USER_USERNAME%')"
-				@click="handleClick($event, '%USER_USERNAME%')" v-if="showUserUsername">
-				User Name
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%USER_MENTION%')"
-				@click="handleClick($event, '%USER_MENTION%')" v-if="showUserMention">
-				User Mention
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%CHANNEL_NAME%')"
-				@click="handleClick($event, '%CHANNEL_NAME%')" v-if="showChannelName">
-				Channel Name
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%CHANNEL_MENTION%')"
-				@click="handleClick($event, '%CHANNEL_MENTION%')" v-if="showChannelMention">
-				Channel Mention
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%XP_TOTAL%')"
-				@click="handleClick($event, '%XP_TOTAL%')" v-if="showXPTotal">
-				Member Total XP
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%XP_LEVEL_XP%')"
-				@click="handleClick($event, '%XP_LEVEL_XP%')" v-if="showXPLevelXP">
-				Member Level XP
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%XP_LEVEL%')"
-				@click="handleClick($event, '%XP_LEVEL%')" v-if="showXPLevel">
-				Member Level
-			</VChip>
-			<VChip class="mb-2 mr-2" :draggable="true" @dragstart="handleDrag($event, '%MESSAGE%')"
-				@click="handleClick($event, '%MESSAGE%')" v-if="showMessage">
-				Message Text
-			</VChip>
+			<div v-for="placeholder in availablePlaceholders">
+				<VChip class="mb-2 mr-2" :draggable="true"
+					@dragstart="handleDrag($event, ReadablePlaceholderTypes[placeholder].value)"
+					@click="handleClick($event, ReadablePlaceholderTypes[placeholder].value)">
+					{{ ReadablePlaceholderTypes[placeholder].display }}
+				</VChip>
+			</div>
 		</VRow>
 		<VRow class="ma-2 pt-5">
 			<!-- Text Input -->
-			<VTextarea ref="messagebox" id="messagebox" v-on:dragover.prevent v-on:drop="handleDrop($event)"
-				v-model="localValue" />
+			<VTextarea ref="messagebox" v-on:dragover.prevent v-on:drop="handleDrop($event)" v-model="localValue"
+				:label="label" :clearable="clearable" :hint="hint"
+				@update:model-value="$emit('update:modelValue', $event)" />
 		</VRow>
 	</VCard>
 </template>
