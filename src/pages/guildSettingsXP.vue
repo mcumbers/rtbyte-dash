@@ -11,11 +11,15 @@ if (!appState.selectedGuild) router.push({ name: 'guilds' });
 import { iconURL } from '@/lib/util/helpers';
 import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
 import GuildRoleSelect from '@/components/GuildRoleSelect.vue';
+import TemplateMessageEditor from '@/components/TemplateMessageEditor.vue';
 
 import { useGuildSettingsXPStore } from '@/stores/api/bot/guildSettingsXP';
 const guildSettingsXPStore = useGuildSettingsXPStore();
 
 let guildSettingsXPLocal = ref({ ...guildSettingsXPStore.guildSettingsXP });
+
+import type { AvailablePlaceholders } from '@/lib/util/constants';
+const availablePlaceholders: AvailablePlaceholders = ['BOT_NAME', 'BOT_MENTION', 'GUILD_NAME', 'GUILD_SIZE', 'MEMBER_NAME', 'MEMBER_MENTION', 'USER_USERNAME', 'USER_MENTION', 'XP_TOTAL', 'XP_LEVEL_XP', 'XP_LEVEL', 'MESSAGE'];
 
 const canImportFromMee6 = computed(() => {
 	if (guildSettingsXPLocal.value && guildSettingsXPLocal.value.mee6ImportTimeNext) {
@@ -150,6 +154,11 @@ appState.$subscribe(() => {
 								<GuildChannelSelect label="Send a Message to a specific Channel when Members Level Up"
 									v-model="(guildSettingsXPLocal.levelUpNotifyChannel as string)"
 									:disabled="!guildSettingsXPLocal.levelUpNotifiy" clearable />
+							</VCol>
+							<VCol cols="12" class="pr-8" v-if="guildSettingsXPLocal.levelUpNotifiy">
+								<TemplateMessageEditor v-model="(guildSettingsXPLocal.levelUpNotifiyMessage as string)"
+									:available-placeholders="availablePlaceholders" label="Level Up Message" clearable
+									:disabled="!guildSettingsXPLocal.levelUpNotifiy" />
 							</VCol>
 
 							<VDivider class="ma-6 mb-8" />
