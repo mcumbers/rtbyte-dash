@@ -65,11 +65,11 @@ appState.$subscribe(() => {
 									</VCardTitle>
 								</VCol>
 								<VRow>
-									<VCol cols="6" class="pl-8 pt-6">
+									<VCol cols="6" class="pl-12 pt-6">
 										<GuildChannelSelect label="Private Mod Log Channel"
 											v-model="(guildSettingsModActionsLocal.modLogChannel as string)" clearable />
 									</VCol>
-									<VCol cols="6" class="pr-8 pt-6">
+									<VCol cols="6" class="pr-12 pt-6">
 										<GuildChannelSelect label="Public Mod Log Channel"
 											v-model="(guildSettingsModActionsLocal.modLogChannelPublic as string)"
 											clearable />
@@ -87,7 +87,7 @@ appState.$subscribe(() => {
 									</VCardTitle>
 								</VCol>
 								<VRow match-height>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member Bans in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.banLog" />
@@ -95,7 +95,7 @@ appState.$subscribe(() => {
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.unbanLog" />
 									</VCol>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member Bans in the Public Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
 											v-model="guildSettingsModActionsLocal.banLogPublic" />
@@ -116,12 +116,12 @@ appState.$subscribe(() => {
 									</VCardTitle>
 								</VCol>
 								<VRow match-height>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member Kicks in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.kickLog" />
 									</VCol>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member Kicks in the Public Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
 											v-model="guildSettingsModActionsLocal.kickLogPublic" />
@@ -139,7 +139,7 @@ appState.$subscribe(() => {
 									</VCardTitle>
 								</VCol>
 								<VRow match-height>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member Timeouts in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.muteLog" />
@@ -147,7 +147,7 @@ appState.$subscribe(() => {
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.unmuteLog" />
 									</VCol>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member Timeouts in the Public Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
 											v-model="guildSettingsModActionsLocal.muteLogPublic" />
@@ -168,12 +168,12 @@ appState.$subscribe(() => {
 									</VCardTitle>
 								</VCol>
 								<VRow match-height>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Message Purges in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.purgeLog" />
 									</VCol>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Message Purges in the Public Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
 											v-model="guildSettingsModActionsLocal.purgeLogPublic" />
@@ -191,7 +191,7 @@ appState.$subscribe(() => {
 									</VCardTitle>
 								</VCol>
 								<VRow match-height>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member VC Bans in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.vcBanLog" />
@@ -199,7 +199,7 @@ appState.$subscribe(() => {
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.vcUnbanLog" />
 									</VCol>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member VC Bans in the Public Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
 											v-model="guildSettingsModActionsLocal.vcBanLogPublic" />
@@ -220,12 +220,12 @@ appState.$subscribe(() => {
 									</VCardTitle>
 								</VCol>
 								<VRow match-height>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member VC Kicks in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.vcKickLog" />
 									</VCol>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member VC Kicks in the Public Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
 											v-model="guildSettingsModActionsLocal.vcKickLogPublic" />
@@ -243,12 +243,12 @@ appState.$subscribe(() => {
 									</VCardTitle>
 								</VCol>
 								<VRow match-height>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member Warnings in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.warnLog" />
 									</VCol>
-									<VCol cols="12" md="6" class="pl-8 pt-6">
+									<VCol cols="12" md="6" class="pl-12 pt-6">
 										<VSwitch label="Log Member Warnings in the Public Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
 											v-model="guildSettingsModActionsLocal.warnLogPublic" />
