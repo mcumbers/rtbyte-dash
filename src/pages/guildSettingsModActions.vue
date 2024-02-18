@@ -69,7 +69,7 @@ appState.$subscribe(() => {
 										<GuildChannelSelect label="Private Mod Log Channel"
 											v-model="(guildSettingsModActionsLocal.modLogChannel as string)" clearable />
 									</VCol>
-									<VCol cols="6" class="pl-8 pt-6">
+									<VCol cols="6" class="pr-8 pt-6">
 										<GuildChannelSelect label="Public Mod Log Channel"
 											v-model="(guildSettingsModActionsLocal.modLogChannelPublic as string)"
 											clearable />
@@ -86,12 +86,12 @@ appState.$subscribe(() => {
 										Ban Settings
 									</VCardTitle>
 								</VCol>
-								<VRow>
+								<VRow match-height>
 									<VCol cols="12" md="6" class="pl-8 pt-6">
-										<VSwitch label="Log Member Bans in the Mod Log" inset
+										<VSwitch label="Log Member Bans in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.banLog" />
-										<VSwitch label="Log Member Unbans in the Mod Log" inset
+										<VSwitch label="Log Member Unbans in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.unbanLog" />
 									</VCol>
@@ -115,9 +115,9 @@ appState.$subscribe(() => {
 										Kick Settings
 									</VCardTitle>
 								</VCol>
-								<VRow>
+								<VRow match-height>
 									<VCol cols="12" md="6" class="pl-8 pt-6">
-										<VSwitch label="Log Member Kicks in the Mod Log" inset
+										<VSwitch label="Log Member Kicks in the Private Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannel"
 											v-model="guildSettingsModActionsLocal.kickLog" />
 									</VCol>
@@ -125,6 +125,133 @@ appState.$subscribe(() => {
 										<VSwitch label="Log Member Kicks in the Public Mod Log" inset
 											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
 											v-model="guildSettingsModActionsLocal.kickLogPublic" />
+									</VCol>
+								</VRow>
+							</VRow>
+
+							<VDivider class="ma-6 mb-8" />
+
+							<!-- Mute Settings -->
+							<VRow>
+								<VCol cols="12">
+									<VCardTitle>
+										Timeout Settings
+									</VCardTitle>
+								</VCol>
+								<VRow match-height>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Member Timeouts in the Private Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannel"
+											v-model="guildSettingsModActionsLocal.muteLog" />
+										<VSwitch label="Log Member UnTimeouts in the Private Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannel"
+											v-model="guildSettingsModActionsLocal.unmuteLog" />
+									</VCol>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Member Timeouts in the Public Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
+											v-model="guildSettingsModActionsLocal.muteLogPublic" />
+										<VSwitch label="Log Member UnTimeouts in the Public Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
+											v-model="guildSettingsModActionsLocal.unmuteLogPublic" />
+									</VCol>
+								</VRow>
+							</VRow>
+
+							<VDivider class="ma-6 mb-8" />
+
+							<!-- Purge Settings -->
+							<VRow>
+								<VCol cols="12">
+									<VCardTitle>
+										Purge Settings
+									</VCardTitle>
+								</VCol>
+								<VRow match-height>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Message Purges in the Private Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannel"
+											v-model="guildSettingsModActionsLocal.purgeLog" />
+									</VCol>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Message Purges in the Public Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
+											v-model="guildSettingsModActionsLocal.purgeLogPublic" />
+									</VCol>
+								</VRow>
+							</VRow>
+
+							<VDivider class="ma-6 mb-8" />
+
+							<!-- VCBan Settings -->
+							<VRow>
+								<VCol cols="12">
+									<VCardTitle>
+										Voice Chat Ban Settings
+									</VCardTitle>
+								</VCol>
+								<VRow match-height>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Member VC Bans in the Private Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannel"
+											v-model="guildSettingsModActionsLocal.vcBanLog" />
+										<VSwitch label="Log Member VC Unbans in the Private Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannel"
+											v-model="guildSettingsModActionsLocal.vcUnbanLog" />
+									</VCol>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Member VC Bans in the Public Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
+											v-model="guildSettingsModActionsLocal.vcBanLogPublic" />
+										<VSwitch label="Log Member VC Unbans in the Public Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
+											v-model="guildSettingsModActionsLocal.vcUnbanLogPublic" />
+									</VCol>
+								</VRow>
+							</VRow>
+
+							<VDivider class="ma-6 mb-8" />
+
+							<!-- VCKick Settings -->
+							<VRow>
+								<VCol cols="12">
+									<VCardTitle>
+										Voice Chat Kick Settings
+									</VCardTitle>
+								</VCol>
+								<VRow match-height>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Member VC Kicks in the Private Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannel"
+											v-model="guildSettingsModActionsLocal.vcKickLog" />
+									</VCol>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Member VC Kicks in the Public Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
+											v-model="guildSettingsModActionsLocal.vcKickLogPublic" />
+									</VCol>
+								</VRow>
+							</VRow>
+
+							<VDivider class="ma-6 mb-8" />
+
+							<!-- Warning Settings -->
+							<VRow>
+								<VCol cols="12">
+									<VCardTitle>
+										Warning Settings
+									</VCardTitle>
+								</VCol>
+								<VRow match-height>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Member Warnings in the Private Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannel"
+											v-model="guildSettingsModActionsLocal.warnLog" />
+									</VCol>
+									<VCol cols="12" md="6" class="pl-8 pt-6">
+										<VSwitch label="Log Member Warnings in the Public Mod Log" inset
+											:disabled="!guildSettingsModActionsLocal.modLogChannelPublic"
+											v-model="guildSettingsModActionsLocal.warnLogPublic" />
 									</VCol>
 								</VRow>
 							</VRow>
