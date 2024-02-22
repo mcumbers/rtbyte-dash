@@ -91,6 +91,8 @@ appState.$subscribe(() => {
 								</VRow>
 							</VRow>
 
+							<VDivider class="ma-6 mb-8" />
+
 							<!-- Form Actions -->
 							<VCol cols="12" class="d-flex flex-wrap gap-4">
 								<VBtn @click.prevent="updateSettings()">
