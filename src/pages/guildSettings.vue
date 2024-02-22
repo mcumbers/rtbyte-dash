@@ -10,6 +10,7 @@ import { ReadableLanguageTags, ReadableMeasurementSystems } from '@/lib/util/rea
 import { iconURL } from '@/lib/util/helpers';
 
 import GuildChannelSelect from '@/components/GuildChannelSelect.vue';
+import GuildRoleSelect from '@/components/GuildRoleSelect.vue';
 
 import { useGuildSettingsStore } from '@/stores/api/bot/guildSettings';
 import TemplateMessageEditor from '@/components/TemplateMessageEditor.vue';
@@ -61,17 +62,41 @@ appState.$subscribe(() => {
 					<!-- Form -->
 					<VForm class="mt-6">
 						<VRow>
-							<!-- Language -->
-							<VCol cols="12" md="6">
-								<VSelect v-model="guildSettingsLocal.chatLanguage" label="Language"
-									:items="ReadableLanguageTags" item-title="display" item-value="value" />
+							<!-- Localization -->
+							<VCol cols="12" class="pl-2">
+								<VCardTitle>
+									Localization Settings
+								</VCardTitle>
 							</VCol>
+							<VRow>
+								<VCol cols="6" class="pl-12 pt-6">
+									<VSelect v-model="guildSettingsLocal.chatLanguage" label="Language"
+										:items="ReadableLanguageTags" item-title="display" item-value="value" />
+								</VCol>
+								<VCol cols="6" class="pr-12 pt-6">
+									<VSelect v-model="guildSettingsLocal.chatMeasurementUnits" label="Measurement Units"
+										:items="ReadableMeasurementSystems" item-title="display" item-value="value" />
+								</VCol>
+							</VRow>
 
-							<!-- Measurement Units -->
-							<VCol cols="12" md="6">
-								<VSelect v-model="guildSettingsLocal.chatMeasurementUnits" label="Measurement Units"
-									:items="ReadableMeasurementSystems" item-title="display" item-value="value" />
+							<VDivider class="ma-6 mb-8" />
+
+							<!-- Admin & Mod Roles -->
+							<VCol cols="12" class="pl-2">
+								<VCardTitle>
+									Basic Permissions Settings
+								</VCardTitle>
 							</VCol>
+							<VRow>
+								<VCol cols="6" class="pl-12 pt-6">
+									<GuildRoleSelect label="Server Administrator Roles"
+										v-model="(guildSettingsLocal.adminRoles as string[])" clearable multiple />
+								</VCol>
+								<VCol cols="6" class="pr-12 pt-6">
+									<GuildRoleSelect label="Server Moderator Roles"
+										v-model="(guildSettingsLocal.moderatorRoles as string[])" clearable multiple />
+								</VCol>
+							</VRow>
 
 							<VDivider class="ma-6 mb-8" />
 
