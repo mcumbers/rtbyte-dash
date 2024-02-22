@@ -30,7 +30,7 @@ const props = defineProps<Props>()
 				<VDivider class="my-2" />
 
 				<!-- 👉 Settings -->
-				<VListItem link to="account">
+				<VListItem link to="account-settings">
 					<template #prepend>
 						<VIcon class="me-2" icon="mdi-cog-outline" size="22" />
 					</template>
