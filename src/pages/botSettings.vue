@@ -70,6 +70,27 @@ appState.$subscribe(() => {
 
 							<VDivider class="ma-6 mb-8" />
 
+							<!-- Ban Settings -->
+							<VRow>
+								<VCol cols="12">
+									<VCardTitle>
+										Ban Settings
+									</VCardTitle>
+								</VCol>
+								<VRow match-height>
+									<VCol cols="12" md="6" class="pl-12 pt-6">
+										<VSwitch label="Log Command Executions in the Private Global Log" inset
+											:disabled="!botGlobalSettingsLocal.globalLogChannelPrivate"
+											v-model="botGlobalSettingsLocal.globalLogCommandExecution" />
+									</VCol>
+									<VCol cols="12" md="6" class="pl-12 pt-6">
+										<VSwitch label="Log Failed Command Executions in the Private Global Log" inset
+											:disabled="!botGlobalSettingsLocal.globalLogChannelPrivate"
+											v-model="botGlobalSettingsLocal.globalLogCommandExecutionFailure" />
+									</VCol>
+								</VRow>
+							</VRow>
+
 							<!-- Form Actions -->
 							<VCol cols="12" class="d-flex flex-wrap gap-4">
 								<VBtn @click.prevent="updateSettings()">

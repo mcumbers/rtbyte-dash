@@ -8,13 +8,15 @@ generator client {
 }
 
 model BotGlobalSettings {
-    id                      String   @id @map("client_id")
-    userBlocklist           String[] @map("user_blocklist")
-    guildBlocklist          String[] @map("guild_blocklist")
-    botOwners               String[] @map("bot_owners")
-    controlGuildID          String?  @map("control_guild_id")
-    globalLogChannelPublic  String?  @map("global_log_channel_public")
-    globalLogChannelPrivate String?  @map("global_log_channel_private")
+    id                               String   @id @map("client_id")
+    userBlocklist                    String[] @map("user_blocklist")
+    guildBlocklist                   String[] @map("guild_blocklist")
+    botOwners                        String[] @map("bot_owners")
+    controlGuildID                   String?  @map("control_guild_id")
+    globalLogChannelPublic           String?  @map("global_log_channel_public")
+    globalLogChannelPrivate          String?  @map("global_log_channel_private")
+    globalLogCommandExecution        Boolean  @default(true) @map("global_log_command_execution")
+    globalLogCommandExecutionFailure Boolean  @default(true) @map("global_log_command_execution_failure")
 
     restarts DateTime[] @map("bot_restarts")
 
@@ -127,7 +129,7 @@ model GuildSettings {
     greetingWelcomeEnabled       Boolean @default(false) @map("greeting_welcome_users")
     greetingWelcomeRejoins       Boolean @default(true) @map("greeting_welcome_rejoins")
     greetingWelcomeChannel       String? @map("greeting_welcome_channel")
-    greetingWelcomeMessage       String? @map("greeting_welcome_message")
+    greetingWelcomeMessage       String? @default("Welcome, %USER_MENTION%") @map("greeting_welcome_message")
     greetingWelcomeMessageRejoin String? @map("greeting_welcome_message_rejoin")
     greetingGoodbyeEnabled       Boolean @default(false) @map("greeting_dismiss_users")
     greetingGoodbyeRejoins       Boolean @default(true) @map("greeting_dismiss_rejoins")
@@ -276,6 +278,12 @@ model GuildSettingsInfoLogs {
     webhookDeleteLog      Boolean        @default(false) @map("log_webhook_delete")
     webhookUpdateLog      Boolean        @default(false) @map("log_webhook_update")
     webhookUpdateLogStyle UpdateLogStyle @default(before_after) @map("log_webhook_update_style")
+
+    // Pluralkit Compatibility
+    pluralkitenabled             Boolean @default(false) @map("log_pluralkit_enabled")
+    pluralkitFilterSourceDeletes Boolean @default(true) @map("log_pluralkit_filter_source_deletes")
+    pluralkitFilterCommands      Boolean @default(true) @map("log_pluralkit_filter_command_deletes")
+    pluralkitShowSourceAccount   Boolean @default(true) @map("log_pluralkit_show_source")
 
     @@map("guildSettingsInfoLogs")
 }
